@@ -1,0 +1,13 @@
+spring:
+  application:
+    name:
+      SafeShelf
+
+
+server:
+  port:
+    8000
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui/index.html

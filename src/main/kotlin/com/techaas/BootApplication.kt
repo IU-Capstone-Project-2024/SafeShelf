@@ -1,4 +1,4 @@
-package com.techaas.api
+package com.techaas
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
