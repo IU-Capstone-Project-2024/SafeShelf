@@ -1,4 +1,4 @@
 package com.techaas.dto.requests
 
-class AddDishRequest {
+class RemoveDishRequest {
 }

@@ -1,4 +1,7 @@
 package com.techaas.dto.requests
 
-class AddProductRequest {
-}
+import com.techaas.dto.responses.ProductResponse
+
+data class AddProductRequest(
+    val products: List<ProductResponse>
+)
