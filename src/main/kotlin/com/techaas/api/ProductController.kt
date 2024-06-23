@@ -23,7 +23,6 @@ class ProductController {
         return null
     }
 
-
     @GetMapping("/list")
     fun getProducts(@RequestHeader("Login") login: String): List<ProductResponse>? {
         return null

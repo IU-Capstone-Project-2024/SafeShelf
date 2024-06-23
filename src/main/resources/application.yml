@@ -2,6 +2,11 @@ spring:
   application:
     name:
       SafeShelf
+  datasource:
+    url: jdbc:postgresql://localhost:5432/products
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
 
 server:
   port:
