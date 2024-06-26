@@ -2,6 +2,7 @@ package com.techaas.domain.entity
 
 import jakarta.persistence.*
 import lombok.Getter
+import java.math.BigDecimal
 
 @Entity
 @Table(name = "user_product")
@@ -22,6 +23,8 @@ data class UserProductEntity(
     @Column(name = "expiration_date")
     val expiration_date: String?,
 
-    ) {
-    constructor() : this(null, null, null, null)
+    @Column(name = "weight")
+    val weight: BigDecimal?
+
+) {
 }

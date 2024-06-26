@@ -1,9 +1,9 @@
-package com.techaas.api
+package com.techaas.endpoints
 
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("/dishes")
+@RequestMapping("/dish")
 class DishController {
 
 }
