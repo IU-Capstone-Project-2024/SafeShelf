@@ -1,0 +1,9 @@
+CREATE TABLE IF NOT EXISTS User_Product
+(
+    ID              BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    UserID          BIGINT,
+    ProductID       BIGINT,
+    expiration_date DATE,
+    FOREIGN KEY (UserID) REFERENCES Users (ID) ON DELETE CASCADE ,
+    FOREIGN KEY (ProductID) REFERENCES Products (ID) ON DELETE CASCADE
+);
