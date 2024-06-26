@@ -1,10 +1,10 @@
-package com.techaas.dto.responses
+package com.techaas.dto
 
 import java.sql.Timestamp
 
-data class ProductResponse(
+data class Product(
     val id: Long,
     val name: String,
-    val weight: Int,
+    val weight: Double,
     val expirationTime: Timestamp
 )
