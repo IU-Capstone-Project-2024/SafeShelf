@@ -33,6 +33,4 @@ data class UsersEntity(
     enum class Sex {
         M, F
     }
-
-    constructor() : this(null, "", "", "", "", 0, Sex.M)
 }

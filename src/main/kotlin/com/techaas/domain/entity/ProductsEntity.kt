@@ -18,5 +18,4 @@ data class ProductsEntity(
     val weight: BigDecimal
 
 ) {
-    constructor() : this(null, "", BigDecimal.ZERO)
 }
