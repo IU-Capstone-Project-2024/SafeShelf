@@ -1,25 +1,32 @@
 package com.techaas.api
 
-import com.techaas.dto.requests.AddUserRequest
-import com.techaas.dto.requests.DeleteUserRequest
+import com.techaas.dto.requests.DeleteAccountRequest
+import com.techaas.dto.requests.LoginAccountRequest
+import com.techaas.dto.requests.RegisterAccountRequest
 import org.springframework.web.bind.annotation.*
 
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/account")
 class UserController {
-    @PostMapping
-    fun registrationUser(@RequestBody addUser: AddUserRequest) {
+    @PostMapping("/register")
+    fun registerAccount(@RequestBody registerAccount: RegisterAccountRequest) {
 
     }
 
+    @PostMapping("/login")
+    fun loginAccount(@RequestBody loginAccount: LoginAccountRequest) {
+
+    }
+
+
     @DeleteMapping
-    fun deleteUser(@RequestBody deleteUser: DeleteUserRequest) {
+    fun deleteUser(@RequestBody deleteUser: DeleteAccountRequest) {
 
     }
 
     @PutMapping
-    fun updateUser(@RequestBody updateUser: AddUserRequest) {
+    fun updateAccount(@RequestBody updateAccount: RegisterAccountRequest) {
 
     }
 

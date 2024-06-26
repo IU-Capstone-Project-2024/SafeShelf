@@ -1,5 +1,5 @@
 package com.techaas.dto.requests
 
-data class DeleteUserRequest (
+data class DeleteAccountRequest (
     val login: String
 )
