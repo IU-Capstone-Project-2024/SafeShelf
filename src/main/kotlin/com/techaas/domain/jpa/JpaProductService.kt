@@ -1,4 +1,4 @@
-package com.techaas.domain
+package com.techaas.domain.jpa
 
 import org.springframework.stereotype.Service
 
