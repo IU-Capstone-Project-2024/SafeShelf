@@ -49,6 +49,8 @@ dependencies {
     testImplementation("org.testcontainers:postgresql:1.16.0")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.1")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.1")
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2")
+    implementation("org.postgresql:postgresql")
 }
 
 noArg {
@@ -71,9 +73,4 @@ kotlin {
 
 tasks.test {
 	outputs.dir(project.extra["snippetsDir"]!!)
-}
-
-tasks.asciidoctor {
-	inputs.dir(project.extra["snippetsDir"]!!)
-	dependsOn(tasks.test)
 }

@@ -9,7 +9,8 @@ data class ProductsEntity(
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long? = null,
+    @Column(name = "id", nullable = false)
+    val id: Long = 0,
 
     @Column(name = "name")
     var name: String,

@@ -2,10 +2,10 @@ import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.TestInstance
 import org.springframework.test.context.DynamicPropertyRegistry
 import org.springframework.test.context.DynamicPropertySource
+import org.testcontainers.containers.PostgreSQLContainer
 import org.testcontainers.junit.jupiter.Container
 import org.testcontainers.junit.jupiter.Testcontainers
-import org.testcontainers.containers.PostgreSQLContainer
-
+import java.sql.DriverManager
 
 @Testcontainers
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -20,11 +20,13 @@ abstract class IntegrationTest {
                 .withUsername("postgres")
                 .withPassword("postgres")
 
-
         @BeforeAll
         @JvmStatic
         fun setUp() {
             POSTGRES.start()
+            println("PostgreSQL container started with URL: ${POSTGRES.jdbcUrl}")
+            Thread.sleep(5000) // Adjust the sleep duration as needed
+            verifyDatabaseConnection()
         }
 
         @DynamicPropertySource
@@ -33,7 +35,25 @@ abstract class IntegrationTest {
             registry.add("spring.datasource.url") { POSTGRES.jdbcUrl }
             registry.add("spring.datasource.username") { POSTGRES.username }
             registry.add("spring.datasource.password") { POSTGRES.password }
-            registry.add("spring.datasource.driverClassName") { POSTGRES.driverClassName }
+        }
+
+        private fun verifyDatabaseConnection() {
+            val url = POSTGRES.jdbcUrl
+            val username = POSTGRES.username
+            val password = POSTGRES.password
+
+            try {
+                DriverManager.getConnection(url, username, password).use { conn ->
+                    if (conn.isValid(2)) {
+                        println("Successfully connected to the database at URL: $url")
+                    } else {
+                        throw RuntimeException("Failed to connect to the database.")
+                    }
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                throw RuntimeException("Database connection verification failed.", e)
+            }
         }
     }
 }
