@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service
 @RequiredArgsConstructor
 class JpaUserService(
     @Autowired
-    private val baseUsersRepository: BaseUsersRepository
+    private  val baseUsersRepository: BaseUsersRepository
 ) {
     fun checkIfTheUserExists(login: String): Boolean {
         return baseUsersRepository.existsUsersEntityByLogin(login)

@@ -18,7 +18,7 @@ abstract class IntegrationTest {
         @Container
         val POSTGRES: PostgreSQLContainer<*> =
             PostgreSQLContainer("postgres:16")
-                .withDatabaseName("products")
+                .withDatabaseName("safeshelf")
                 .withUsername("postgres")
                 .withPassword("postgres")
 
@@ -38,6 +38,7 @@ abstract class IntegrationTest {
             registry.add("spring.datasource.username") { POSTGRES.username }
             registry.add("spring.datasource.password") { POSTGRES.password }
         }
+
 
         private fun verifyDatabaseConnection() {
             val url = POSTGRES.jdbcUrl

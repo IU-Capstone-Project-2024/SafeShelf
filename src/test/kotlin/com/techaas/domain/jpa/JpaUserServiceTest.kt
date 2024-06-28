@@ -11,18 +11,18 @@ import org.springframework.boot.test.context.SpringBootTest
 @SpringBootTest
 @Transactional
 class JpaUserServiceTest : IntegrationTest() {
-    var login = "testuser"
-    var password = "password123"
-    var name = "John"
-    var surname = "Doe"
-    var age = 30
-    var sex = Sex.M
 
     @Autowired
     private lateinit var jpaUserService: JpaUserService
 
     @Test
     fun checkIfTheUserExists() {
+        var login = "testuser"
+        var password = "password123"
+        var name = "John"
+        var surname = "Doe"
+        var age = 30
+        var sex = Sex.M
         jpaUserService.saveUser(login, password, name, surname, age, sex)
 
         assertTrue(jpaUserService.checkIfTheUserExists(login))
