@@ -47,4 +47,9 @@ class JpaUserService(
     fun getUser(login: String): UsersEntity {
         return baseUsersRepository.findByLogin(login)
     }
+
+
+    fun findAll(): List<UsersEntity> {
+        return baseUsersRepository.findAll()
+    }
 }
