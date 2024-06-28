@@ -3,6 +3,7 @@ package com.techaas.domain.entity
 import jakarta.persistence.*
 import lombok.Getter
 import java.math.BigDecimal
+import java.sql.Timestamp
 
 @Entity
 @Table(name = "user_product")
@@ -21,10 +22,10 @@ data class UserProductEntity(
     val productID: ProductsEntity?,
 
     @Column(name = "expiration_date")
-    val expiration_date: String?,
+    var expiration_date: Timestamp,
 
     @Column(name = "weight")
-    val weight: BigDecimal?
+    var weight: BigDecimal?
 
 ) {
 }
