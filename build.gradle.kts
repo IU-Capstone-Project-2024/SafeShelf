@@ -46,7 +46,8 @@ dependencies {
     testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
     testImplementation("org.springframework.security:spring-security-test")
     testImplementation("org.testcontainers:junit-jupiter")
-    testImplementation("org.testcontainers:postgresql:1.16.0")
+    testImplementation("org.testcontainers:postgresql")
+    implementation("org.postgresql:postgresql")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.1")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.1")
 }
@@ -71,6 +72,11 @@ kotlin {
 
 tasks.test {
 	outputs.dir(project.extra["snippetsDir"]!!)
+}
+
+tasks.asciidoctor {
+	inputs.dir(project.extra["snippetsDir"]!!)
+	dependsOn(tasks.test)
 }
 
 tasks.asciidoctor {
