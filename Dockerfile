@@ -7,6 +7,6 @@ RUN gradle build --stacktrace -x test --no-daemon
 FROM openjdk:8-jre-alpine
 WORKDIR /app
 EXPOSE 8000
-COPY --from=builder /builder/build/libs/server.jar .
+COPY --from=builder /builder/build/libs/SafeShelf-0.0.1-SNAPSHOT.jar .
 USER nobody
-CMD ["java", "-jar", "server.jar"]
+CMD ["java", "-jar", "SafeShelf-0.0.1-SNAPSHOT.jar"]

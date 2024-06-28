@@ -43,7 +43,6 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-jdbc")
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
-    implementation("org.springframework.boot:spring-boot-starter-mail")
     implementation("org.slf4j:log4j-over-slf4j")
     implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
@@ -52,7 +51,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
     compileOnly("org.projectlombok:lombok")
     annotationProcessor("org.projectlombok:lombok")
-    implementation("org.postgresql:postgresql")
+    implementation("org.postgresql:postgresql:42.2.20")
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
