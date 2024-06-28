@@ -3,10 +3,13 @@ spring:
     name:
       SafeShelf
   datasource:
-    url: jdbc:postgresql://localhost:5433/safe
+    url: jdbc:postgresql://localhost:5432/postgres
     username: postgres
     password: postgres
     driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create
 
 server:
   port:

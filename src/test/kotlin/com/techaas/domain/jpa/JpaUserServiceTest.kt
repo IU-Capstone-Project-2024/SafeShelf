@@ -1,7 +1,7 @@
 package com.techaas.domain.jpa
 
-import com.techaas.domain.IntegrationTest
 import com.techaas.data_entities.Sex
+import com.techaas.domain.IntegrationTest
 import jakarta.transaction.Transactional
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
@@ -11,14 +11,20 @@ import org.springframework.boot.test.context.SpringBootTest
 @SpringBootTest
 @Transactional
 class JpaUserServiceTest : IntegrationTest() {
+    var login = "testuser"
+    var password = "password123"
+    var name = "John"
+    var surname = "Doe"
+    var age = 30
+    var sex = Sex.M
 
     @Autowired
     private lateinit var jpaUserService: JpaUserService
 
     @Test
     fun checkIfTheUserExists() {
-        val login = "testuser"
-        jpaUserService.saveUser(login, "password123", "John", "Doe", 30, Sex.M)
+        jpaUserService.saveUser(login, password, name, surname, age, sex)
+
         assertTrue(jpaUserService.checkIfTheUserExists(login))
         assertFalse(jpaUserService.checkIfTheUserExists("nonexistentuser"))
     }
