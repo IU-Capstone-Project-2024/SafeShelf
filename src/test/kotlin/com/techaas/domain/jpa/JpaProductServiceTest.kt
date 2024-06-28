@@ -1,10 +1,6 @@
 package com.techaas.domain.jpa
 
-import com.techaas.domain.entity.ProductsEntity
-import com.techaas.domain.jpa.bases_quieries.BaseProductRepository
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertNotNull
-import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -23,10 +19,8 @@ class JpaProductServiceTest {
         val productName = "TestProduct"
         val productWeight = BigDecimal("2.5")
 
-        // Save the product
         jpaProductService.saveProduct(productName, productWeight)
 
-        // Test existence
         assertTrue(jpaProductService.existProduct(productName, productWeight))
     }
 
