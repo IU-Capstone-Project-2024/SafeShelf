@@ -16,4 +16,4 @@ volumes:
 
 
 networks:
-  backend: { }
+  backend:

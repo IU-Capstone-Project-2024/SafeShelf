@@ -28,7 +28,7 @@ class JpaUserService(
     }
 
     fun updateUser(login: String, password: String, name: String, surname: String, age: Int, sex: Sex) {
-        val usersEntity = baseUserRepository.findByLogin(login) // check that entity does not exist
+        val usersEntity= baseUserRepository.findByLogin(login)
         usersEntity.login = login
         usersEntity.password = password
         usersEntity.name = name

@@ -30,16 +30,24 @@ class JpaUserProductService(
     }
 
     fun getProductsByAccountId(accountId: Long): List<UserProductEntity> {
-        return baseUserProductService.getUserProductEntitiesById(userId = accountId)
+        return baseUserProductService.getUserProductEntitiesByUserId(userId = accountId)
+    }
+
+    fun getProductByAccountAndProduct(user: UserEntity, product: ProductEntity): UserProductEntity {
+        return baseUserProductService.findByUserAndProduct(user, product)
     }
 
 
-    fun updateProductWeight(userProductID: Long, weight: BigDecimal) {
-        val userProductEntity = baseUserProductService.findById(userProductID).orElse(null)
+    fun updateProductWeight(id: Long, weight: BigDecimal) {
+        val userProductEntity = baseUserProductService.findById(id).orElse(null)
         if (userProductEntity != null) {
             userProductEntity.weight = weight
+            baseUserProductService.save(userProductEntity)
         }
-        baseUserProductService.save(userProductEntity)
+    }
+
+    fun getProductByAccountIdAndProductId(userId: Long, productId: Long): UserProductEntity {
+        return baseUserProductService.getUserProductEntityByUserIdAndProductId(userId, productId)
     }
 
     fun deleteProduct(accountId: Long, productId: Long) {
@@ -52,5 +60,9 @@ class JpaUserProductService(
         val userProductEntity = baseUserProductService.findById(userProductID).orElse(null)
         userProductEntity.expirationDate = expirationDate
         baseUserProductService.save(userProductEntity)
+    }
+
+    fun findAll(): List<UserProductEntity> {
+        return baseUserProductService.findAll()
     }
 }
