@@ -14,18 +14,16 @@ data class UserProductEntity(
     val id: Long? = null,
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "userid", nullable = false)
-    var userID: UsersEntity?,
+    @JoinColumn(name = "userid", referencedColumnName = "id", nullable = false)
+    var user: UserEntity?,
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "productid", nullable = false)
-    val productID: ProductsEntity?,
+    @JoinColumn(name = "productid", referencedColumnName = "id", nullable = false)
+    var product: ProductEntity?,
 
     @Column(name = "expiration_date")
-    var expiration_date: Timestamp,
+    var expirationDate: Timestamp,
 
     @Column(name = "weight")
     var weight: BigDecimal?
-
-) {
-}
+)

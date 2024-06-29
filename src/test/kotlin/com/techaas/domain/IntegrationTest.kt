@@ -10,7 +10,6 @@ import org.testcontainers.junit.jupiter.Testcontainers
 import java.sql.DriverManager
 
 @Testcontainers
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 abstract class IntegrationTest {
 
     companion object {
