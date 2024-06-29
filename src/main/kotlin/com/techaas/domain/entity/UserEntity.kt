@@ -4,7 +4,7 @@ import com.techaas.data_entities.Sex
 import jakarta.persistence.*
 
 @Entity
-@Table(name = "Users")
+@Table(name = "users")
 data class UserEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,6 +29,4 @@ data class UserEntity(
     @Column(name = "sex")
     @Enumerated(EnumType.STRING)
     var sex: Sex
-
-) {
-}
+)

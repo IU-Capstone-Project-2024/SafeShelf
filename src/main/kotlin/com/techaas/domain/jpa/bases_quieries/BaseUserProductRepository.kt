@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository
 @Repository
 interface BaseUserProductRepository : JpaRepository<UserProductEntity, Long> {
     fun getUserProductEntitiesById(userId: Long): List<UserProductEntity>
-    fun deleteUserProductEntityByUserIDAndProductID(userID: UserEntity, productID: ProductEntity)
-    fun findByUserIDAndProductID(userID: UserEntity, productID: ProductEntity): List<UserProductEntity>
+    fun deleteUserProductEntityByUserAndProduct(user: UserEntity, product: ProductEntity)
+    fun findByUserAndProduct(user: UserEntity, product: ProductEntity): List<UserProductEntity>
 }

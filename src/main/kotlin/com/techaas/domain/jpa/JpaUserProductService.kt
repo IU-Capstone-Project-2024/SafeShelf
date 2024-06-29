@@ -5,7 +5,7 @@ import com.techaas.domain.entity.UserEntity
 import com.techaas.domain.entity.UserProductEntity
 import com.techaas.domain.jpa.bases_quieries.BaseProductRepository
 import com.techaas.domain.jpa.bases_quieries.BaseUserProductRepository
-import com.techaas.domain.jpa.bases_quieries.BaseUsersRepository
+import com.techaas.domain.jpa.bases_quieries.BaseUserRepository
 import lombok.RequiredArgsConstructor
 import org.springframework.stereotype.Component
 import java.math.BigDecimal
@@ -15,7 +15,7 @@ import java.sql.Timestamp
 @RequiredArgsConstructor
 class JpaUserProductService(
     private val baseUserProductService: BaseUserProductRepository,
-    private val baseUsersRepository: BaseUsersRepository,
+    private val baseUserRepository: BaseUserRepository,
     private val baseProductRepository: BaseProductRepository
 
 ) {
@@ -43,9 +43,9 @@ class JpaUserProductService(
     }
 
     fun deleteProduct(accountId: Long, productId: Long) {
-        val user = baseUsersRepository.getUsersEntityById(userId = accountId)
+        val user = baseUserRepository.getUsersEntityById(userId = accountId)
         val product = baseProductRepository.getProductsEntityById(id = productId)
-        baseUserProductService.deleteUserProductEntityByUserIDAndProductID(user, product)
+        baseUserProductService.deleteUserProductEntityByUserAndProduct(user, product)
     }
 
     fun updateProductDate(userProductID: Long, expirationDate: Timestamp) {
