@@ -2,6 +2,7 @@ package com.techaas.endpoints
 
 import com.techaas.dto.requests.LoginAccountRequest
 import com.techaas.dto.requests.RegisterAccountRequest
+import com.techaas.dto.requests.UpdateUserRequest
 import org.springframework.web.bind.annotation.*
 
 
@@ -19,8 +20,12 @@ class UserController {
     }
 
     @PutMapping
-    fun update(@RequestBody updateAccount: RegisterAccountRequest) {
+    fun update(@RequestBody updateAccount: UpdateUserRequest) {
 
     }
 
+    @GetMapping
+    fun getUser(@RequestBody getAccountRequest: RegisterAccountRequest) {
+
+    }
 }
