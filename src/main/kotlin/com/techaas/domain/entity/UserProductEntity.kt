@@ -11,21 +11,20 @@ import java.sql.Timestamp
 data class UserProductEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long? = null,
+    @Column(name = "id", nullable = false)
+    val id: Long = 0,
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "userid", nullable = false)
-    var userID: UsersEntity?,
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
+    val user: UserEntity?,
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "productid", nullable = false)
-    val productID: ProductsEntity?,
+    @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false)
+    val product: ProductEntity?,
 
     @Column(name = "expiration_date")
-    var expiration_date: Timestamp,
+    var expirationDate: Timestamp,
 
     @Column(name = "weight")
     var weight: BigDecimal?
-
-) {
-}
+)
