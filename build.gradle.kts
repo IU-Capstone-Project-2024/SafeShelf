@@ -11,6 +11,8 @@ plugins {
 group = "com.example"
 version = "0.0.1-SNAPSHOT"
 
+val testContainerVersion = "1.19.0"
+
 java {
     toolchain {
         languageVersion.set(JavaLanguageVersion.of(21))
@@ -46,14 +48,19 @@ dependencies {
     implementation("org.postgresql:postgresql")
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2")
 
-
-
+    testImplementation(kotlin("test"))
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.0")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.0")
     testImplementation("org.springframework.boot:spring-boot-testcontainers")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.testcontainers:junit-jupiter")
-    testImplementation("org.testcontainers:postgresql")
+    testImplementation("org.testcontainers:postgresql:$testContainerVersion")
+}
+
+dependencyManagement {
+    imports {
+        mavenBom("org.testcontainers:testcontainers-bom:$testContainerVersion")
+    }
 }
 
 noArg {
