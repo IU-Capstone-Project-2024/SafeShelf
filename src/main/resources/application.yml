@@ -3,10 +3,16 @@ spring:
     name:
       SafeShelf
   datasource:
-    url: jdbc:postgresql://localhost:5433/safe
+    url: jdbc:postgresql://localhost:5432/safeshelf
     username: postgres
     password: postgres
     driver-class-name: org.postgresql.Driver
+    hikari:
+      connection-timeout: 20000
+      maximum-pool-size: 10
+  jpa:
+    hibernate:
+      ddl-auto: none
 
 server:
   port:
