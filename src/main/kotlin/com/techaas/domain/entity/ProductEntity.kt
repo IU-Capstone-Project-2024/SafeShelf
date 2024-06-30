@@ -4,9 +4,8 @@ import jakarta.persistence.*
 import java.math.BigDecimal
 
 @Entity
-@Table(name = "Products")
-data class ProductsEntity(
-
+@Table(name = "products")
+data class ProductEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -17,6 +16,4 @@ data class ProductsEntity(
 
     @Column(name = "weight")
     val weight: BigDecimal
-
-) {
-}
+)

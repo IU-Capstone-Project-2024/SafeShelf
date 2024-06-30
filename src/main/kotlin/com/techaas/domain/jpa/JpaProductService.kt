@@ -1,14 +1,14 @@
 package com.techaas.domain.jpa
 
-import com.techaas.domain.entity.ProductsEntity
+import com.techaas.domain.entity.ProductEntity
 import com.techaas.domain.jpa.bases_quieries.BaseProductRepository
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.stereotype.Service
+import lombok.RequiredArgsConstructor
+import org.springframework.stereotype.Component
 import java.math.BigDecimal
 
-@Service
+@Component
+@RequiredArgsConstructor
 class JpaProductService(
-    @Autowired
     private val baseProductRepository: BaseProductRepository
 ) {
     fun existProduct(name: String, weight: BigDecimal): Boolean {
@@ -16,15 +16,19 @@ class JpaProductService(
     }
 
     fun saveProduct(name: String, weight: BigDecimal) {
-        val productEntity = ProductsEntity(
-            name= name,
+        val productEntity = ProductEntity(
+            name = name,
             weight = weight
         )
         baseProductRepository.save(productEntity)
     }
 
-    fun getProductByName(name: String) : ProductsEntity {
+    fun getProductByName(name: String): ProductEntity {
         return baseProductRepository.getProductsEntityByName(name)
+    }
+
+    fun findAll(): List<ProductEntity> {
+        return baseProductRepository.findAll()
     }
 
 

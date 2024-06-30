@@ -9,13 +9,13 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("/account")
 class UserController {
     @PostMapping("/register")
-    fun register(@RequestBody registerAccount: RegisterAccountRequest) {
-
+    fun register(@RequestBody registerAccount: RegisterAccountRequest): String {
+        return "ok";
     }
 
     @PostMapping("/login")
-    fun login(@RequestBody loginAccount: LoginAccountRequest) {
-
+    fun login(@RequestBody loginAccount: LoginAccountRequest): String {
+        return "ok";
     }
 
     @PutMapping

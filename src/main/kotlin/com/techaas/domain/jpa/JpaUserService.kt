@@ -1,24 +1,22 @@
 package com.techaas.domain.jpa
 
 import com.techaas.data_entities.Sex
-import com.techaas.domain.entity.UsersEntity
-import com.techaas.domain.jpa.bases_quieries.BaseUsersRepository
+import com.techaas.domain.entity.UserEntity
+import com.techaas.domain.jpa.bases_quieries.BaseUserRepository
 import lombok.RequiredArgsConstructor
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.stereotype.Service
+import org.springframework.stereotype.Component
 
-@Service
+@Component
 @RequiredArgsConstructor
 class JpaUserService(
-    @Autowired
-    private val baseUsersRepository: BaseUsersRepository
+    private val baseUserRepository: BaseUserRepository
 ) {
     fun checkIfTheUserExists(login: String): Boolean {
-        return baseUsersRepository.existsUsersEntityByLogin(login)
+        return baseUserRepository.existsUsersEntityByLogin(login)
     }
 
     fun saveUser(login: String, password: String, name: String, surname: String, age: Int, sex: Sex) {
-        val userEntity = UsersEntity(
+        val userEntity = UserEntity(
             login = login,
             password = password,
             name = name,
@@ -26,30 +24,30 @@ class JpaUserService(
             age = age,
             sex = sex
         )
-        baseUsersRepository.save(userEntity)
+        baseUserRepository.save(userEntity)
     }
 
     fun updateUser(login: String, password: String, name: String, surname: String, age: Int, sex: Sex) {
-        val usersEntity = baseUsersRepository.findByLogin(login) // check that entity does not exist
+        val usersEntity= baseUserRepository.findByLogin(login)
         usersEntity.login = login
         usersEntity.password = password
         usersEntity.name = name
         usersEntity.surname = surname
         usersEntity.age = age
         usersEntity.sex = sex
-        baseUsersRepository.save(usersEntity)
+        baseUserRepository.save(usersEntity)
     }
 
     fun checkAuthorizationAccess(login: String, password: String): Boolean {
-        return baseUsersRepository.existsUsersEntityByLoginAndPassword(login, password)
+        return baseUserRepository.existsUsersEntityByLoginAndPassword(login, password)
     }
 
-    fun getUser(login: String): UsersEntity {
-        return baseUsersRepository.findByLogin(login)
+    fun getUser(login: String): UserEntity {
+        return baseUserRepository.findByLogin(login)
     }
 
 
-    fun findAll(): List<UsersEntity> {
-        return baseUsersRepository.findAll()
+    fun findAll(): List<UserEntity> {
+        return baseUserRepository.findAll()
     }
 }

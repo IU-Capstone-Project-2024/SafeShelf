@@ -1,5 +1,3 @@
-package com.techaas.services
-
 import com.techaas.domain.jpa.JpaUserService
 import com.techaas.dto.requests.LoginAccountRequest
 import com.techaas.exceptions.UserDoesntExistException
