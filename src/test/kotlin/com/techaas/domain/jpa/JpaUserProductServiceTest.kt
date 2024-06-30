@@ -1,11 +1,8 @@
 package com.techaas.domain.jpa
 
-import com.techaas.domain.entity.UserProductEntity
-import com.techaas.domain.entity.UsersEntity
-import com.techaas.domain.entity.ProductsEntity
+import com.techaas.domain.jpa.bases_quieries.BaseProductRepository
 import com.techaas.domain.jpa.bases_quieries.BaseUserProductRepository
 import com.techaas.domain.jpa.bases_quieries.BaseUsersRepository
-import com.techaas.domain.jpa.bases_quieries.BaseProductRepository
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired

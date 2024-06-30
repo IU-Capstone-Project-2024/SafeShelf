@@ -1,17 +1,15 @@
 services:
   database:
-    container_name: database-postgresql
+    container_name: db
     image: postgres:16
     ports:
-      - "5432:5432"
+      - "5433:5432"
     environment:
-      POSTGRES_DB: products
+      POSTGRES_DB: safe
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     volumes:
       - postgresql:/var/lib/postgresql/data
-    networks:
-      - backend
 
 volumes:
   postgresql: { }

@@ -1,18 +1,16 @@
 package com.techaas.domain.jpa
 
-import IntegrationTest
+import com.techaas.domain.IntegrationTest
 import com.techaas.data_entities.Sex
-import com.techaas.domain.entity.UsersEntity
 import jakarta.transaction.Transactional
 import org.junit.jupiter.api.Assertions.*
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 
 @SpringBootTest
 @Transactional
-class JpaUserServiceTest: IntegrationTest() {
+class JpaUserServiceTest : IntegrationTest() {
 
     @Autowired
     private lateinit var jpaUserService: JpaUserService

@@ -1,3 +1,5 @@
+package com.techaas.domain
+
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.TestInstance
 import org.springframework.test.context.DynamicPropertyRegistry
