@@ -2,36 +2,25 @@ package com.techaas.endpoints
 
 import com.techaas.dto.requests.AddProductRequest
 import com.techaas.dto.Product
-import com.techaas.dto.requests.GetProductRequest
 import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/product")
 class ProductController {
     @PostMapping("/save")
-    fun add(
-        @RequestBody request: AddProductRequest
-    ): AddProductRequest? {
+    fun add(@RequestBody request: AddProductRequest): AddProductRequest? {
         return null
     }
 
     @PatchMapping("/update/{id}")
-    fun update(
-        @PathVariable(value = "id") id: Long
-    ): Product? {
-        return null
-    }
-
-    @GetMapping("/list")
-    fun all(@RequestBody request: GetProductRequest): List<Product>? {
+    fun update(@PathVariable(value = "id") id: Long): Product? {
         return null
     }
 
     @GetMapping("/{id}")
     fun get(
         @RequestHeader("Login") login: String,
-        @PathVariable(value = "id") id: Long
-    ): Product? {
+        @PathVariable(value = "id") id: Long): Product? {
         return null
     }
 
