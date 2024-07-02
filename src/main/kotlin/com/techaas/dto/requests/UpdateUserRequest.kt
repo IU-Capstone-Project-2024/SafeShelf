@@ -2,7 +2,8 @@ package com.techaas.dto.requests
 
 import com.techaas.data_entities.Sex
 
-data class RegisterAccountRequest (
+data class UpdateUserRequest (
+    val oldLogin : String,
     val login: String,
     val name: String,
     val surname: String,
