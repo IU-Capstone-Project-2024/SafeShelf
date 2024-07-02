@@ -1,39 +1,35 @@
+package com.techaas.services
+
 import com.techaas.domain.jpa.JpaUserService
-import com.techaas.dto.requests.GetAccountRequest
 import com.techaas.dto.requests.LoginAccountRequest
 import com.techaas.dto.requests.RegisterAccountRequest
 import com.techaas.dto.requests.UpdateUserRequest
 import com.techaas.dto.responses.UserDataResponse
-import com.techaas.exceptions.LoginPasswordUnmatch
-import com.techaas.exceptions.UserAlreadyExists
+import com.techaas.exceptions.LoginPasswordMismatchException
+import com.techaas.exceptions.UserAlreadyExistsException
 import com.techaas.exceptions.UserDoesntExistException
 import jakarta.transaction.Transactional
 import lombok.RequiredArgsConstructor
-import org.springframework.http.HttpStatus
-import org.springframework.http.ResponseEntity
-import org.springframework.stereotype.Service
-import org.springframework.web.bind.annotation.ResponseStatus
+import org.springframework.stereotype.Component
 
-@Service
+@Component
 @RequiredArgsConstructor
 class AccountService(
     val jpaUserService: JpaUserService
-
 ) {
     @Transactional
-    fun userLogin(accountRequest: LoginAccountRequest): ResponseStatus {
+    fun login(accountRequest: LoginAccountRequest) {
         if (!jpaUserService.checkIfTheUserExists(accountRequest.login)) {
             throw UserDoesntExistException("User is not registered yet")
         } else if (!jpaUserService.checkAuthorizationAccess(accountRequest.login, accountRequest.password)) {
-            throw LoginPasswordUnmatch("Incorrect password")
+            throw LoginPasswordMismatchException("Incorrect password")
         }
-        return ResponseStatus(HttpStatus.ACCEPTED)
     }
 
     @Transactional
-    fun userRegistration(registerEntity: RegisterAccountRequest): ResponseStatus {
+    fun registration(registerEntity: RegisterAccountRequest) {
         if (jpaUserService.checkIfTheUserExists(registerEntity.login)) {
-            throw UserAlreadyExists("User already exists")
+            throw UserAlreadyExistsException("User already exists")
         }
         jpaUserService.saveUser(
             registerEntity.login,
@@ -43,11 +39,10 @@ class AccountService(
             registerEntity.age,
             registerEntity.sex
         )
-        return ResponseStatus(HttpStatus.CREATED)
     }
 
     @Transactional
-    fun userUpdate(updateAccount: UpdateUserRequest): ResponseStatus {
+    fun updateInfo(updateAccount: UpdateUserRequest) {
         if (!jpaUserService.checkIfTheUserExists(updateAccount.oldLogin)) {
             throw UserDoesntExistException("User is not registered yet")
         }
@@ -59,15 +54,14 @@ class AccountService(
             updateAccount.age,
             updateAccount.sex
         )
-        return ResponseStatus(HttpStatus.NO_CONTENT)
     }
 
     @Transactional
-    fun getUser(getAccountRequest: GetAccountRequest): ResponseEntity<UserDataResponse> {
-        if (!jpaUserService.checkIfTheUserExists(getAccountRequest.login)) {
+    fun getInfo(login: String): UserDataResponse {
+        if (!jpaUserService.checkIfTheUserExists(login)) {
             throw UserDoesntExistException("User is not registered yet")
         }
-        val user = jpaUserService.getUser(getAccountRequest.login)
+        val user = jpaUserService.getUser(login)
         val userResponse = UserDataResponse(
             login = user.login,
             name = user.name,
@@ -75,7 +69,7 @@ class AccountService(
             age = user.age,
             sex = user.sex
         )
-        return ResponseEntity(userResponse, HttpStatus.OK)
+        return userResponse
     }
 }
 

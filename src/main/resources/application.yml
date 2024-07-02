@@ -2,8 +2,10 @@ spring:
   application:
     name:
       SafeShelf
+  liquibase:
+    enabled: false
   datasource:
-    url: jdbc:postgresql://localhost:5433/safeshelf
+    url: jdbc:postgresql://localhost:5432/safeshelf
     username: postgres
     password: postgres
     driver-class-name: org.postgresql.Driver
