@@ -11,8 +11,8 @@ import org.springframework.boot.test.context.SpringBootTest
 @SpringBootTest
 @Transactional
 class JpaUserServiceTest : IntegrationTest() {
-//    @Autowired
-//    private lateinit var jpaUserService: JpaUserService
+    @Autowired
+    private lateinit var jpaUserService: JpaUserService
 
     val login = "testuser"
     val password = "password123"
@@ -22,71 +22,66 @@ class JpaUserServiceTest : IntegrationTest() {
     val sex = Sex.M
 
     @Test
-    fun test() {
-        println(2)
+    fun checkIfTheUserExists() {
+        jpaUserService.saveUser(login, password, name, surname, age, sex)
+
+        assertTrue(jpaUserService.checkIfTheUserExists(login))
+        assertFalse(jpaUserService.checkIfTheUserExists("nonexistentuser"))
     }
 
-//    @Test
-//    fun checkIfTheUserExists() {
-//        jpaUserService.saveUser(login, password, name, surname, age, sex)
-//
-//        assertTrue(jpaUserService.checkIfTheUserExists(login))
-//        assertFalse(jpaUserService.checkIfTheUserExists("nonexistentuser"))
-//    }
-//
-//    @Test
-//    fun saveUser() {
-//        jpaUserService.saveUser(login, password, name, surname, age, sex)
-//
-//        val user = jpaUserService.getUser(login)
-//        assertNotNull(user)
-//        assertEquals(login, user.login)
-//        assertEquals("John", user.name)
-//        assertEquals("Doe", user.surname)
-//        assertEquals(30, user.age)
-//        assertEquals(Sex.M, user.sex)
-//    }
-//
-//    @Test
-//    fun updateUser() {
-//        jpaUserService.saveUser(login, password, name, surname, age, sex)
-//        jpaUserService.updateUser(login, "newpassword", "Jane", "Smith", 25, Sex.F)
-//        val updatedUser = jpaUserService.getUser(login)
-//        assertNotNull(updatedUser)
-//        assertEquals("newpassword", updatedUser.password)
-//        assertEquals("Jane", updatedUser.name)
-//        assertEquals("Smith", updatedUser.surname)
-//        assertEquals(25, updatedUser.age)
-//        assertEquals(Sex.F, updatedUser.sex)
-//    }
-//
-//    @Test
-//    fun checkAuthorizationAccess() {
-//        jpaUserService.saveUser(login, password, name, surname, age, sex)
-//
-//        assertTrue(jpaUserService.checkAuthorizationAccess(login, password))
-//        assertFalse(jpaUserService.checkAuthorizationAccess(login, "wrongpassword"))
-//    }
-//
-//    @Test
-//    fun getUser() {
-//        jpaUserService.saveUser(login, password, name, surname, age, sex)
-//
-//        val user = jpaUserService.getUser(login)
-//
-//        assertNotNull(user)
-//        assertEquals(login, user.login)
-//        assertEquals("John", user.name)
-//        assertEquals("Doe", user.surname)
-//    }
-//
-//    @Test
-//    fun findAll() {
-//        val login1 = "testuser1"
-//        val login2 = "testuser2"
-//        jpaUserService.saveUser(login1, "password123", "John", "Doe", 30, Sex.M)
-//        jpaUserService.saveUser(login2, "password456", "Jane", "Smith", 25, Sex.F)
-//        val users = jpaUserService.findAll()
-//        assertEquals(2, users.size)
-//    }
+    @Test
+    fun saveUser() {
+        jpaUserService.saveUser(login, password, name, surname, age, sex)
+
+        val user = jpaUserService.getUser(login)
+        assertNotNull(user)
+        assertEquals(login, user.login)
+        assertEquals("John", user.name)
+        assertEquals("Doe", user.surname)
+        assertEquals(30, user.age)
+        assertEquals(Sex.M, user.sex)
+    }
+
+    @Test
+    fun updateUser() {
+        jpaUserService.saveUser(login, password, name, surname, age, sex)
+        jpaUserService.updateUser(login, "newpassword", "Jane", "Smith", 25, Sex.F)
+        val updatedUser = jpaUserService.getUser(login)
+        assertNotNull(updatedUser)
+        assertEquals("newpassword", updatedUser.password)
+        assertEquals("Jane", updatedUser.name)
+        assertEquals("Smith", updatedUser.surname)
+        assertEquals(25, updatedUser.age)
+        assertEquals(Sex.F, updatedUser.sex)
+    }
+
+    @Test
+    fun checkAuthorizationAccess() {
+        jpaUserService.saveUser(login, password, name, surname, age, sex)
+
+        assertTrue(jpaUserService.checkAuthorizationAccess(login, password))
+        assertFalse(jpaUserService.checkAuthorizationAccess(login, "wrongpassword"))
+    }
+
+    @Test
+    fun getUser() {
+        jpaUserService.saveUser(login, password, name, surname, age, sex)
+
+        val user = jpaUserService.getUser(login)
+
+        assertNotNull(user)
+        assertEquals(login, user.login)
+        assertEquals("John", user.name)
+        assertEquals("Doe", user.surname)
+    }
+
+    @Test
+    fun findAll() {
+        val login1 = "testuser1"
+        val login2 = "testuser2"
+        jpaUserService.saveUser(login1, "password123", "John", "Doe", 30, Sex.M)
+        jpaUserService.saveUser(login2, "password456", "Jane", "Smith", 25, Sex.F)
+        val users = jpaUserService.findAll()
+        assertEquals(2, users.size)
+    }
 }

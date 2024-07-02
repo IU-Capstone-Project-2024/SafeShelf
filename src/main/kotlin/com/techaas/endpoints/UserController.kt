@@ -5,6 +5,7 @@ import com.techaas.dto.requests.RegisterAccountRequest
 import com.techaas.dto.requests.UpdateUserRequest
 import com.techaas.dto.responses.UserDataResponse
 import com.techaas.services.AccountService
+import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 
 
@@ -14,11 +15,13 @@ class UserController(
     private val accountService: AccountService
 ) {
     @PostMapping("/register")
+    @ResponseStatus(HttpStatus.OK)
     fun register(@RequestBody registerAccount: RegisterAccountRequest) {
         accountService.registration(registerAccount)
     }
 
     @PostMapping("/login")
+    @ResponseStatus(HttpStatus.OK)
     fun login(@RequestBody loginAccount: LoginAccountRequest) {
         accountService.login(loginAccount)
     }

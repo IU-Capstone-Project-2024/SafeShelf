@@ -19,7 +19,6 @@ class ProductController {
 
     @GetMapping("/{id}")
     fun get(
-        @RequestHeader("Login") login: String,
         @PathVariable(value = "id") id: Long): Product? {
         return null
     }
