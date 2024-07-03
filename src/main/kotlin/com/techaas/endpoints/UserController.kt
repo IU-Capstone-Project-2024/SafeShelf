@@ -3,8 +3,10 @@ package com.techaas.endpoints
 import com.techaas.dto.requests.LoginAccountRequest
 import com.techaas.dto.requests.RegisterAccountRequest
 import com.techaas.dto.requests.UpdateUserRequest
+import com.techaas.dto.responses.LoginAccountResponse
 import com.techaas.dto.responses.UserDataResponse
 import com.techaas.services.AccountService
+import com.techaas.services.AuthenticationService
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 
@@ -12,7 +14,8 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @RequestMapping("/account")
 class UserController(
-    private val accountService: AccountService
+    private val accountService: AccountService,
+    private val authenticationService: AuthenticationService
 ) {
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.OK)
@@ -22,8 +25,8 @@ class UserController(
 
     @PostMapping("/login")
     @ResponseStatus(HttpStatus.OK)
-    fun login(@RequestBody loginAccount: LoginAccountRequest) {
-        accountService.login(loginAccount)
+    fun login(@RequestBody loginAccount: LoginAccountRequest): LoginAccountResponse {
+        return accountService.login(loginAccount)
     }
 
     @PutMapping

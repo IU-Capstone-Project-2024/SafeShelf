@@ -16,6 +16,7 @@ spring:
     hibernate:
       ddl-auto: none
 
+
 server:
   port:
     8000
