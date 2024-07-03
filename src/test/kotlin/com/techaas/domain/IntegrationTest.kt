@@ -1,33 +1,84 @@
 package com.techaas.domain
 
+import liquibase.Liquibase
+import liquibase.database.Database
+import liquibase.database.DatabaseFactory
+import liquibase.database.jvm.JdbcConnection
+import liquibase.exception.LiquibaseException
+import liquibase.resource.FileSystemResourceAccessor
 import org.junit.jupiter.api.BeforeAll
-import org.junit.jupiter.api.TestInstance
 import org.springframework.test.context.DynamicPropertyRegistry
 import org.springframework.test.context.DynamicPropertySource
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig
+import org.testcontainers.containers.JdbcDatabaseContainer
 import org.testcontainers.containers.PostgreSQLContainer
+import org.testcontainers.containers.wait.strategy.Wait
 import org.testcontainers.junit.jupiter.Container
 import org.testcontainers.junit.jupiter.Testcontainers
+import java.io.File
+import java.io.FileNotFoundException
+import java.nio.file.Path
+import java.sql.Connection
 import java.sql.DriverManager
+import java.sql.SQLException
 
 @Testcontainers
+@SpringJUnitConfig
 abstract class IntegrationTest {
-
     companion object {
-
         @Container
         val POSTGRES: PostgreSQLContainer<*> =
             PostgreSQLContainer("postgres:16")
                 .withDatabaseName("safeshelf")
                 .withUsername("postgres")
                 .withPassword("postgres")
+                .withReuse(true)
+                .waitingFor(Wait.forListeningPort())
+                .withStartupTimeout(java.time.Duration.ofMinutes(1))
+
 
         @BeforeAll
         @JvmStatic
         fun setUp() {
             POSTGRES.start()
             println("PostgreSQL container started with URL: ${POSTGRES.jdbcUrl}")
-            Thread.sleep(5000) // Adjust the sleep duration as needed
             verifyDatabaseConnection()
+            runMigrations(POSTGRES)
+        }
+
+        @JvmStatic
+        fun runMigrations(container: JdbcDatabaseContainer<*>) {
+            val url: String = container.jdbcUrl
+            val user: String = container.username
+            val password: String = container.password
+            try {
+                val connection: Connection = DriverManager.getConnection(
+                    url,
+                    user,
+                    password
+                )
+                val database: Database = DatabaseFactory.getInstance()
+                    .findCorrectDatabaseImplementation(JdbcConnection(connection))
+
+                val path: Path = File(".")
+                    .toPath()
+                    .toAbsolutePath()
+                    .parent
+                    .resolve("migrations")
+
+                val liquibase = Liquibase(
+                    "master.xml",
+                    FileSystemResourceAccessor(path.toFile()),
+                    database
+                )
+                liquibase.update("")
+            } catch (e: SQLException) {
+                e.printStackTrace();
+            } catch (e: LiquibaseException) {
+                throw RuntimeException(e);
+            } catch (e: FileNotFoundException) {
+                e.printStackTrace()
+            }
         }
 
         @DynamicPropertySource

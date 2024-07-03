@@ -2,14 +2,19 @@ spring:
   application:
     name:
       SafeShelf
+  liquibase:
+    enabled: false
   datasource:
     url: jdbc:postgresql://localhost:5434/safeshelf
     username: postgres
     password: postgres
     driver-class-name: org.postgresql.Driver
+    hikari:
+      connection-timeout: 20000
+      maximum-pool-size: 10
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: none
 
 server:
   port:

@@ -12,15 +12,15 @@ data class UserProductEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    val id: Long? = null,
+    val id: Long = 0,
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
-    var user: UserEntity?,
+    val user: UserEntity?,
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false)
-    var product: ProductEntity?,
+    val product: ProductEntity?,
 
     @Column(name = "expiration_date")
     var expirationDate: Timestamp,

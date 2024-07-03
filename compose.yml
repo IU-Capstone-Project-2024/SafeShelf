@@ -10,10 +10,28 @@ services:
       POSTGRES_PASSWORD: "postgres"
     volumes:
       - postgresql:/var/lib/postgresql/data
+    networks:
+      - backend
+
+  liquibase-migrations:
+    image: liquibase/liquibase:4.25
+    depends_on:
+      - database
+    command:
+      - --changeLogFile=master.xml
+      - --driver=org.postgresql.Driver
+      - --url=jdbc:postgresql://database:5432/safeshelf
+      - --username=postgres
+      - --password=postgres
+      - update
+    volumes:
+      - ./migrations:/liquibase/changelog
+    networks:
+      - backend
 
 volumes:
   postgresql:
 
 
 networks:
-  backend: { }
+  backend:

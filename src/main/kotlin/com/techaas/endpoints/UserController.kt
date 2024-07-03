@@ -1,50 +1,38 @@
 package com.techaas.endpoints
 
 import com.techaas.dto.requests.LoginAccountRequest
-import com.techaas.dto.requests.RefreshTokenRequest
 import com.techaas.dto.requests.RegisterAccountRequest
-import com.techaas.dto.responses.TokenResponse
-import com.techaas.services.AuthenticationService
+import com.techaas.dto.requests.UpdateUserRequest
+import com.techaas.dto.responses.UserDataResponse
+import com.techaas.services.AccountService
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
-import org.springframework.web.server.ResponseStatusException
 
 
 @RestController
 @RequestMapping("/account")
 class UserController(
-    private val authenticationService: AuthenticationService
+    private val accountService: AccountService
 ) {
     @PostMapping("/register")
+    @ResponseStatus(HttpStatus.OK)
     fun register(@RequestBody registerAccount: RegisterAccountRequest) {
-        println("test123")
+        accountService.registration(registerAccount)
     }
 
     @PostMapping("/login")
-    fun login(@RequestBody loginAccountRequest: LoginAccountRequest) =
-        authenticationService.authentication(loginAccountRequest)
-
-    @PostMapping("/refresh")
-    fun refreshAccessToken(
-        @RequestBody request: RefreshTokenRequest
-    ): TokenResponse =
-        authenticationService.refreshAccessToken(request.token)
-            ?.mapToTokenResponse()
-            ?: throw ResponseStatusException(HttpStatus.FORBIDDEN, "Invalid refresh token.")
-
-    private fun String.mapToTokenResponse(): TokenResponse =
-        TokenResponse(
-            token = this
-        )
-
-    @PostMapping("/test")
-    fun testing_something(@RequestBody loginAccount: LoginAccountRequest) {
-        println("test456")
+    @ResponseStatus(HttpStatus.OK)
+    fun login(@RequestBody loginAccount: LoginAccountRequest) {
+        accountService.login(loginAccount)
     }
 
     @PutMapping
-    fun update(@RequestBody updateAccount: RegisterAccountRequest) {
-
+    fun update(@RequestBody updateAccount: UpdateUserRequest): UserDataResponse {
+        return accountService.updateInfo(updateAccount)
     }
 
+    @GetMapping("/{login}")
+    fun getUserInfo(@PathVariable login: String): UserDataResponse {
+        return accountService.getInfo(login)
+    }
 }

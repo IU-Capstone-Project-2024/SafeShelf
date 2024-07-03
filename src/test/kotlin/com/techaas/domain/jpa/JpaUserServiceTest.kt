@@ -10,7 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest
 
 @SpringBootTest
 @Transactional
-class JpaUserServiceTest: IntegrationTest() {
+class JpaUserServiceTest : IntegrationTest() {
     @Autowired
     private lateinit var jpaUserService: JpaUserService
 
@@ -45,10 +45,15 @@ class JpaUserServiceTest: IntegrationTest() {
     @Test
     fun updateUser() {
         jpaUserService.saveUser(login, password, name, surname, age, sex)
-        jpaUserService.updateUser(login, "newpassword", "Jane", "Smith", 25, Sex.F)
-        val updatedUser = jpaUserService.getUser(login)
+
+        jpaUserService.updateUser(login, "newuser", password, "Jane", "Smith", 25, Sex.F)
+
+        val updatedUser = jpaUserService.getUser("newuser")
+        val oldUser = jpaUserService.checkIfTheUserExists(login)
+        assertFalse(oldUser)
         assertNotNull(updatedUser)
-        assertEquals("newpassword", updatedUser.password)
+        assertEquals("newuser", updatedUser.login)
+        assertEquals(password, updatedUser.password)
         assertEquals("Jane", updatedUser.name)
         assertEquals("Smith", updatedUser.surname)
         assertEquals(25, updatedUser.age)
@@ -81,7 +86,9 @@ class JpaUserServiceTest: IntegrationTest() {
         val login2 = "testuser2"
         jpaUserService.saveUser(login1, "password123", "John", "Doe", 30, Sex.M)
         jpaUserService.saveUser(login2, "password456", "Jane", "Smith", 25, Sex.F)
+
         val users = jpaUserService.findAll()
+
         assertEquals(2, users.size)
     }
 }

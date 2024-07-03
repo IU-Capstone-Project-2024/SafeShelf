@@ -10,7 +10,7 @@ import java.math.BigDecimal
 
 @SpringBootTest
 @Transactional
-class JpaProductServiceTest: IntegrationTest() {
+class JpaProductServiceTest : IntegrationTest() {
 
     @Autowired
     private lateinit var jpaProductService: JpaProductService
@@ -20,7 +20,6 @@ class JpaProductServiceTest: IntegrationTest() {
 
     @Test
     fun testExistProduct() {
-
         jpaProductService.saveProduct(productName, productWeight)
 
         assertTrue(jpaProductService.existProduct(productName, productWeight))

@@ -1,8 +1,8 @@
-package com.techaas.dto.requests
+package com.techaas.dto.responses
 
 import com.techaas.data_entities.Sex
 
-data class RegisterAccountRequest(
+data class UserDataResponse(
     val login: String,
     val password: String,
     val name: String,
