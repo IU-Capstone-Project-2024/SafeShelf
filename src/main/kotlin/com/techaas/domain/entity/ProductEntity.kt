@@ -15,5 +15,17 @@ data class ProductEntity(
     var name: String,
 
     @Column(name = "weight")
-    val weight: BigDecimal
+    val weight: BigDecimal,
+
+    @Column(name = "carbohydrates")
+    var carbohydrates: BigDecimal,
+
+    @Column(name = "kcal")
+    var kcal: BigDecimal,
+
+    @Column(name = "fats")
+    var fats: BigDecimal,
+
+    @Column(name = "proteins")
+    var proteins: BigDecimal
 )
