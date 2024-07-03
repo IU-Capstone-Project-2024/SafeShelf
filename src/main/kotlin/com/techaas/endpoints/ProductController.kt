@@ -23,12 +23,4 @@ class ProductController {
         return null
     }
 
-
-    @DeleteMapping("/delete/{id}")
-    fun delete(
-        @RequestHeader("Login") login: String,
-        @PathVariable(value = "id") id: Long
-    ): Product? {
-        return null
-    }
 }
