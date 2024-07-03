@@ -1,5 +1,6 @@
 package com.techaas.configuration
 
+import com.techaas.services.JwtAuthenticationFilter
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.authentication.AuthenticationProvider
@@ -23,10 +24,8 @@ class SecurityConfiguration(
             .csrf { it.disable() }
             .authorizeHttpRequests {
                 it
-                    .requestMatchers("/account/register", "/account/login", "/account/test")
-                    .permitAll()
                     .anyRequest()
-                    .authenticated()
+                    .permitAll()
             }
             .sessionManagement {
                 it.sessionCreationPolicy(SessionCreationPolicy.STATELESS)

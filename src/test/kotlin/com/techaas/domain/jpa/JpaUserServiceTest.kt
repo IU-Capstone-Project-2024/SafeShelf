@@ -7,12 +7,16 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.security.crypto.password.PasswordEncoder
 
 @SpringBootTest
 @Transactional
 class JpaUserServiceTest : IntegrationTest() {
     @Autowired
     private lateinit var jpaUserService: JpaUserService
+
+    @Autowired
+    private lateinit var encoder: PasswordEncoder
 
     val login = "testuser"
     val password = "password123"
@@ -64,6 +68,7 @@ class JpaUserServiceTest : IntegrationTest() {
     fun checkAuthorizationAccess() {
         jpaUserService.saveUser(login, password, name, surname, age, sex)
 
+        assertTrue(jpaUserService.checkIfTheUserExists(login))
         assertTrue(jpaUserService.checkAuthorizationAccess(login, password))
         assertFalse(jpaUserService.checkAuthorizationAccess(login, "wrongpassword"))
     }
