@@ -27,8 +27,16 @@ class JpaUserService(
         baseUserRepository.save(userEntity)
     }
 
-    fun updateUser(login: String, password: String, name: String, surname: String, age: Int, sex: Sex) {
-        val usersEntity= baseUserRepository.findByLogin(login)
+    fun updateUser(
+        oldLogin: String,
+        login: String,
+        password: String,
+        name: String,
+        surname: String,
+        age: Int,
+        sex: Sex
+    ) {
+        val usersEntity = baseUserRepository.findByLogin(oldLogin)
         usersEntity.login = login
         usersEntity.password = password
         usersEntity.name = name

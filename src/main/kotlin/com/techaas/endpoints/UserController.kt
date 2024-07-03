@@ -27,8 +27,8 @@ class UserController(
     }
 
     @PutMapping
-    fun update(@RequestBody updateAccount: UpdateUserRequest) {
-        accountService.updateInfo(updateAccount)
+    fun update(@RequestBody updateAccount: UpdateUserRequest): UserDataResponse {
+        return accountService.updateInfo(updateAccount)
     }
 
     @GetMapping("/{login}")
