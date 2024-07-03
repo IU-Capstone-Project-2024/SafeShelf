@@ -1,10 +1,7 @@
 package com.techaas.handler
 
 import com.techaas.dto.responses.ApiErrorResponse
-import com.techaas.exceptions.IncorrectParameterException
-import com.techaas.exceptions.LoginPasswordMismatchException
-import com.techaas.exceptions.UserAlreadyExistsException
-import com.techaas.exceptions.UserDoesntExistException
+import com.techaas.exceptions.*
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseStatus
@@ -29,7 +26,7 @@ class UserErrorHandler {
     fun handleLoginPasswordMismatch(exception: LoginPasswordMismatchException): ApiErrorResponse {
         return ApiErrorResponse(
             code = HttpStatus.NOT_FOUND.toString(),
-            description = "Неправильно указаны логин и пароль",
+            description = "Неправильно указан пароль",
             exceptionName = exception.getName(),
             exceptionMessage = exception.message
         )
@@ -52,6 +49,17 @@ class UserErrorHandler {
         return ApiErrorResponse(
             code = HttpStatus.BAD_REQUEST.toString(),
             description = "Пользователь еще не зарегистрирован",
+            exceptionName = exception.getName(),
+            exceptionMessage = exception.message
+        )
+    }
+
+    @ExceptionHandler(RepeatLoginAfterUpdateException::class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    fun handleRepeatUsingLogin(exception: RepeatLoginAfterUpdateException): ApiErrorResponse {
+        return ApiErrorResponse(
+            code = HttpStatus.CONFLICT.toString(),
+            description = "Пользователь с таким логином уже существует, пожалуйста, придумайте новый логин",
             exceptionName = exception.getName(),
             exceptionMessage = exception.message
         )
