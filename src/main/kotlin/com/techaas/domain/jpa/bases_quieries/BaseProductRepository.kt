@@ -8,6 +8,6 @@ import java.math.BigDecimal
 @Repository
 interface BaseProductRepository: JpaRepository<ProductEntity, Long> {
     fun existsProductsEntityByNameAndWeight(name: String, weight: BigDecimal): Boolean
-    fun getProductsEntityByName(name: String) : ProductEntity
+    fun getProductsEntityByNameAndWeight(name: String, weight: BigDecimal) : ProductEntity
     fun getProductsEntityById(id: Long) : ProductEntity
 }

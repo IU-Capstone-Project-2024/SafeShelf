@@ -1,7 +1,6 @@
 package com.techaas.configuration
 
 import com.techaas.domain.jpa.JpaUserService
-import com.techaas.repository.UserRepository
 import com.techaas.services.CustomUserDetailsService
 import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean
