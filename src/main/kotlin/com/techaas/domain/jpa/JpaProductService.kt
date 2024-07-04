@@ -15,15 +15,24 @@ class JpaProductService(
         return baseProductRepository.existsProductsEntityByNameAndWeight(name, weight)
     }
 
-    fun saveProduct(name: String, weight: BigDecimal) {
+    fun saveProduct(
+        name: String, weight: BigDecimal, carbohydrates: BigDecimal,
+        kcal: BigDecimal,
+        fats: BigDecimal,
+        proteins: BigDecimal
+    ) {
         val productEntity = ProductEntity(
             name = name,
-            weight = weight
+            weight = weight,
+            carbohydrates = carbohydrates,
+            fats = fats,
+            kcal = kcal,
+            proteins = proteins
         )
         baseProductRepository.save(productEntity)
     }
 
-    fun getProductByName(name: String): ProductEntity {
+    fun getProductByName(name: String): ProductEntity? {
         return baseProductRepository.getProductsEntityByName(name)
     }
 

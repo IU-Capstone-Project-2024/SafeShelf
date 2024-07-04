@@ -52,10 +52,11 @@ class JwtAuthenticationFilter(
         } catch (e: ExpiredJwtException) {
             sendErrorResponse(response, "JWT token is expired", request)
             return
-        } catch (e: SignatureException) {
-            sendErrorResponse(response, "JWT validity cannot be asserted.", request)
-            return
+//        } catch (e: SignatureException) {
+//            sendErrorResponse(response, "JWT validity cannot be asserted.", request)
+//            return
         } catch (e: Exception) {
+            print(e)
             sendErrorResponse(response, "Failed to parse or validate token", request)
             return
         }

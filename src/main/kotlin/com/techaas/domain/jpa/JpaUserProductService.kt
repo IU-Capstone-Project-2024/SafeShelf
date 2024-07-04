@@ -19,7 +19,12 @@ class JpaUserProductService(
     private val baseProductRepository: BaseProductRepository
 
 ) {
-    fun saveProduct(user: UserEntity, product: ProductEntity, weight: BigDecimal, expirationDate: Timestamp) {
+    fun saveProduct(
+        user: UserEntity,
+        product: ProductEntity,
+        weight: BigDecimal,
+        expirationDate: Timestamp
+    ) {
         val userProductModel = UserProductEntity(
             user = user,
             product = product,

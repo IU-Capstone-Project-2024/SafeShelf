@@ -1,6 +1,7 @@
 package com.techaas.endpoints
 
 import com.techaas.data_entities.Product
+import com.techaas.data_entities.ProductWithDate
 import com.techaas.domain.qra.QrAnalyzerService
 import com.techaas.dto.requests.DecodeReceiptRequest
 import org.springframework.http.ResponseEntity
@@ -17,7 +18,7 @@ class ReceiptDecoderController(
 ) {
 
     @PostMapping("/decode")
-    fun getReceipt(@RequestBody decodeReceiptRequest: DecodeReceiptRequest): ResponseEntity<List<Product>> {
+    fun getReceipt(@RequestBody decodeReceiptRequest: DecodeReceiptRequest): ResponseEntity<List<ProductWithDate>> {
         return ResponseEntity.ok(qrAnalyzerService.getReceipt(decodeReceiptRequest))
     }
 }
