@@ -32,11 +32,13 @@ class JpaProductService(
         baseProductRepository.save(productEntity)
     }
 
-    fun getProductByNameAndWeight(name: String, weight: BigDecimal): ProductEntity? {
+    fun getProductByNameAndWeight(name: String, weight: BigDecimal): ProductEntity {
         return baseProductRepository.getProductsEntityByNameAndWeight(name, weight)
     }
 
     fun findAll(): List<ProductEntity> {
         return baseProductRepository.findAll()
     }
+
+
 }

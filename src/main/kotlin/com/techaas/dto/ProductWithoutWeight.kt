@@ -1,4 +1,4 @@
-package com.techaas.data_entities
+package com.techaas.dto
 
 data class ProductWithoutWeight(
     val id: Int,

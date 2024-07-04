@@ -1,7 +1,5 @@
-package com.techaas.configuration
+package com.techaas.services
 
-import com.techaas.services.CustomUserDetailsService
-import com.techaas.services.TokenService
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
@@ -12,16 +10,17 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component
 import org.springframework.web.filter.OncePerRequestFilter
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.techaas.dto.responses.ErrorResponse
+import com.techaas.dto.responses.ApiErrorResponse
 import io.jsonwebtoken.ExpiredJwtException
-import io.jsonwebtoken.SignatureException
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
+import io.jsonwebtoken.security.SignatureException
+import org.springframework.beans.factory.annotation.Qualifier
 
 @Component
 class JwtAuthenticationFilter(
     private val userDetailsService: CustomUserDetailsService,
     private val tokenService: TokenService,
+    @Qualifier("DisableSecurity")
+    private val allowSecurity: AllowSecurity
 ) : OncePerRequestFilter() {
 
     private val objectMapper = ObjectMapper()
@@ -33,7 +32,7 @@ class JwtAuthenticationFilter(
     ) {
         val authHeader: String? = request.getHeader("Authorization")
         val path = request.requestURI
-        if (isPermittedEndpoint(path)) {
+        if (allowSecurity.permitEndpoint(path)) {
             filterChain.doFilter(request, response)
             return
         }
@@ -53,11 +52,10 @@ class JwtAuthenticationFilter(
         } catch (e: ExpiredJwtException) {
             sendErrorResponse(response, "JWT token is expired", request)
             return
-//        } catch (e: SignatureException) {
-//            sendErrorResponse(response, "JWT validity cannot be asserted.", request)
-//            return
+        } catch (e: SignatureException) {
+            sendErrorResponse(response, "JWT validity cannot be asserted.", request)
+            return
         } catch (e: Exception) {
-            print(e)
             sendErrorResponse(response, "Failed to parse or validate token", request)
             return
         }
@@ -76,18 +74,13 @@ class JwtAuthenticationFilter(
         SecurityContextHolder.getContext().authentication = authToken
     }
 
-    private fun isPermittedEndpoint(path: String): Boolean {
-        return path.startsWith("/account/register") ||
-                path.startsWith("/account/login") ||
-                path.startsWith("/account/test")
-    }
-
     private fun sendErrorResponse(response: HttpServletResponse, message: String, request: HttpServletRequest) {
-        val errorResponse = ErrorResponse(
-            code = HttpServletResponse.SC_UNAUTHORIZED,
-            message = message,
-            timestamp = LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME),
-            path = request.requestURI
+
+        val errorResponse = ApiErrorResponse(
+            code = HttpServletResponse.SC_UNAUTHORIZED.toString(),
+            description = "You are not authorized!",
+            exceptionMessage = message,
+            exceptionName = "UnauthorizedUserException",
         )
         response.status = HttpServletResponse.SC_UNAUTHORIZED
         response.contentType = "application/json"

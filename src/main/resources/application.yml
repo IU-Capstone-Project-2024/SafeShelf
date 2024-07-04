@@ -5,7 +5,7 @@ spring:
   liquibase:
     enabled: false
   datasource:
-    url: jdbc:postgresql://localhost:5434/safeshelf
+    url: jdbc:postgresql://localhost:5432/safeshelf
     username: postgres
     password: postgres
     driver-class-name: org.postgresql.Driver
@@ -15,6 +15,7 @@ spring:
   jpa:
     hibernate:
       ddl-auto: none
+
 
 server:
   port:

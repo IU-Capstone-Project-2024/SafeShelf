@@ -1,6 +1,6 @@
 package com.techaas.dto.requests
 
-import com.techaas.data_entities.ProductWithDate
+import com.techaas.dto.ProductWithDate
 
 data class FinallyAddProductsRequest(
     val login : String,
