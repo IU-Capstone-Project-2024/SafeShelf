@@ -19,32 +19,17 @@ import org.springframework.stereotype.Component
 class ProductService(
     private val qrAnalyzerService: QrAnalyzerService,
     private val jpaUserService: JpaUserService,
-    private val jpaProductService: JpaProductService,
     private val jpaUserProductService: JpaUserProductService
 ) {
     @Transactional
     fun saveProducts(finallyAddProductsRequest: FinallyAddProductsRequest) {
         val userEntity: UserEntity = jpaUserService.getUser(finallyAddProductsRequest.login)
         for (product: ProductWithDate in finallyAddProductsRequest.products) {
-            var productToAdd: ProductEntity
-            if (!jpaProductService.existProduct(product.name, product.weight)) {
-                productToAdd = jpaProductService.getProductByNameAndWeight(product.name, product.weight)
-                jpaProductService.saveProduct(
-                    name = product.name,
-                    carbohydrates = product.carbohydrates,
-                    fats = product.fats,
-                    kcal = product.kcal,
-                    proteins = product.proteins,
-                    weight = product.weight,
-                )
-            } else {
-                productToAdd = jpaProductService.getProductByNameAndWeight(product.name, product.weight)
-            }
             jpaUserProductService.saveProduct(
                 user = userEntity,
                 expirationDate = product.date,
-                product = productToAdd,
                 weight = product.weight,
+                product = product
             )
 
         }
