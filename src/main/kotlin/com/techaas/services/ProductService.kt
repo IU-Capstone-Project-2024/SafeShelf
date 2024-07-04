@@ -30,7 +30,7 @@ class ProductService(
     fun saveProducts(finallyAddProductsRequest: FinallyAddProductsRequest){
         for (product: ProductWithDate in finallyAddProductsRequest.products) {
             val userEntity: UserEntity = jpaUserService.getUser(finallyAddProductsRequest.login)
-            var productToAdd: ProductEntity? = jpaProductService.getProductByName(product.name)
+            var productToAdd: ProductEntity? = jpaProductService.getProductByNameAndWeight(product.name, product.weight)
             if (productToAdd == null) {
                 jpaProductService.saveProduct(
                     name = product.name,
@@ -40,7 +40,7 @@ class ProductService(
                     proteins = product.proteins,
                     weight = product.weight,
                 )
-                productToAdd = jpaProductService.getProductByName(product.name)
+                productToAdd = jpaProductService.getProductByNameAndWeight(product.name, product.weight)
             }
             if (productToAdd != null) {
                 jpaUserProductService.saveProduct(
