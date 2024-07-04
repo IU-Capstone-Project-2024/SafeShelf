@@ -20,9 +20,9 @@ class ProductController(
     }
 
     @PostMapping("/get_temp_products")
-    fun getTempProducts(@RequestBody request: AddProductRequest){ //: List<ProductWithDate> {
-//        val result = productService.getTempProducts(request)
-//        return result
+    fun getTempProducts(@RequestBody request: AddProductRequest): List<ProductWithDate> {
+        val result = productService.getTempProducts(request)
+        return result
     }
 
     @GetMapping("/{id}")
