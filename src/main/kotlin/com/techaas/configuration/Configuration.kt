@@ -1,5 +1,6 @@
 package com.techaas.configuration
 
+import com.techaas.domain.jpa.JpaUserService
 import com.techaas.repository.UserRepository
 import com.techaas.services.CustomUserDetailsService
 import org.springframework.boot.context.properties.EnableConfigurationProperties
@@ -17,17 +18,17 @@ import org.springframework.security.crypto.password.PasswordEncoder
 @EnableConfigurationProperties(JwtProperties::class)
 class Configuration {
     @Bean
-    fun userDetailsService(userRepository: UserRepository): UserDetailsService =
-        CustomUserDetailsService(userRepository)
+    fun userDetailsService(jpaUserService: JpaUserService): UserDetailsService =
+        CustomUserDetailsService(jpaUserService)
 
     @Bean
     fun encoder(): PasswordEncoder = BCryptPasswordEncoder()
 
     @Bean
-    fun authenticationProvider(userRepository: UserRepository): AuthenticationProvider =
+    fun authenticationProvider(jpaUserService: JpaUserService): AuthenticationProvider =
         DaoAuthenticationProvider()
             .also {
-                it.setUserDetailsService(userDetailsService(userRepository))
+                it.setUserDetailsService(userDetailsService(jpaUserService))
                 it.setPasswordEncoder(encoder())
             }
 

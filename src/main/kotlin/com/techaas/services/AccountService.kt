@@ -4,6 +4,7 @@ import com.techaas.domain.jpa.JpaUserService
 import com.techaas.dto.requests.LoginAccountRequest
 import com.techaas.dto.requests.RegisterAccountRequest
 import com.techaas.dto.requests.UpdateUserRequest
+import com.techaas.dto.responses.LoginAccountResponse
 import com.techaas.dto.responses.UserDataResponse
 import com.techaas.exceptions.LoginPasswordMismatchException
 import com.techaas.exceptions.RepeatLoginAfterUpdateException
@@ -16,15 +17,12 @@ import org.springframework.stereotype.Component
 @Component
 @RequiredArgsConstructor
 class AccountService(
-    val jpaUserService: JpaUserService
+    val jpaUserService: JpaUserService,
+    private val authenticationService: AuthenticationService
 ) {
-    @Transactional
-    fun login(accountRequest: LoginAccountRequest) {
-        if (!jpaUserService.checkIfTheUserExists(accountRequest.login)) {
-            throw UserDoesntExistException("User is not registered yet")
-        } else if (!jpaUserService.checkAuthorizationAccess(accountRequest.login, accountRequest.password)) {
-            throw LoginPasswordMismatchException("Incorrect password")
-        }
+    fun login(accountRequest: LoginAccountRequest): LoginAccountResponse {
+//        println(accountRequest.login)
+        return authenticationService.authentication(accountRequest)
     }
 
     @Transactional
