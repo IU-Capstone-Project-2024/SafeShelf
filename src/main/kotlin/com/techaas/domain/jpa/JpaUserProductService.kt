@@ -6,6 +6,7 @@ import com.techaas.domain.entity.UserProductEntity
 import com.techaas.domain.jpa.bases_quieries.BaseProductRepository
 import com.techaas.domain.jpa.bases_quieries.BaseUserProductRepository
 import com.techaas.domain.jpa.bases_quieries.BaseUserRepository
+import com.techaas.dto.ProductWithDate
 import lombok.RequiredArgsConstructor
 import org.springframework.stereotype.Component
 import java.math.BigDecimal
@@ -16,18 +17,32 @@ import java.sql.Timestamp
 class JpaUserProductService(
     private val baseUserProductService: BaseUserProductRepository,
     private val baseUserRepository: BaseUserRepository,
-    private val baseProductRepository: BaseProductRepository
+    private val baseProductRepository: BaseProductRepository,
+    private val jpaProductService: JpaProductService
 
 ) {
     fun saveProduct(
         user: UserEntity,
-        product: ProductEntity,
         weight: BigDecimal,
-        expirationDate: Timestamp
+        expirationDate: Timestamp,
+        product: ProductWithDate
     ) {
+        var productToAdd: ProductEntity
+        if (!jpaProductService.existProduct(product.name, product.weight)) {
+            jpaProductService.saveProduct(
+                name = product.name,
+                carbohydrates = product.carbohydrates,
+                fats = product.fats,
+                kcal = product.kcal,
+                proteins = product.proteins,
+                weight = product.weight,
+            )
+        }
+        productToAdd = jpaProductService.getProductByNameAndWeight(product.name, product.weight)
+
         val userProductModel = UserProductEntity(
             user = user,
-            product = product,
+            product = productToAdd,
             weight = weight,
             expirationDate = expirationDate
         )
