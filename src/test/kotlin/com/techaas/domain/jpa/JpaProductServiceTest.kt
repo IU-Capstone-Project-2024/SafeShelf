@@ -15,31 +15,39 @@ class JpaProductServiceTest : IntegrationTest() {
     @Autowired
     private lateinit var jpaProductService: JpaProductService
 
-    val productName = "TestProduct"
-    val productWeight = BigDecimal("2.5")
+    val name = "TestProduct"
+    val weight = BigDecimal("2.5")
+    val carbohydrates = BigDecimal("3.333")
+    val kcal = BigDecimal("1000")
+    val fats = BigDecimal("3.3")
+    val proteins = BigDecimal("4")
 
     @Test
     fun testExistProduct() {
-        jpaProductService.saveProduct(productName, productWeight)
+        jpaProductService.saveProduct(name, weight, carbohydrates, kcal, fats, proteins)
 
-        assertTrue(jpaProductService.existProduct(productName, productWeight))
+        assertTrue(jpaProductService.existProduct(name, weight))
     }
 
     @Test
     fun testSaveAndGetProduct() {
-        jpaProductService.saveProduct(productName, productWeight)
+        jpaProductService.saveProduct(name, weight, carbohydrates, kcal, fats, proteins)
 
-        val product = jpaProductService.getProductByName(productName)
+        val product = jpaProductService.getProductByName(name)
 
         assertNotNull(product)
-        assertEquals(productName, product.name)
-        assertEquals(productWeight, product.weight)
+        assertEquals(name, product.name)
+        assertEquals(weight, product.weight)
+        assertEquals(carbohydrates, product.carbohydrates)
+        assertEquals(kcal, product.kcal)
+        assertEquals(fats, product.fats)
+        assertEquals(proteins, product.proteins)
     }
 
     @Test
     fun testFindAll() {
-        jpaProductService.saveProduct(productName, productWeight)
-        jpaProductService.saveProduct("milk", BigDecimal(12))
+        jpaProductService.saveProduct(name, weight, carbohydrates, kcal, fats, proteins)
+        jpaProductService.saveProduct("milk", weight, carbohydrates, kcal, fats, proteins)
 
         val products = jpaProductService.findAll()
 

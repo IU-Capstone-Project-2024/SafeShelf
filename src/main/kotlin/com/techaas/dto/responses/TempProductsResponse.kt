@@ -1,6 +1,6 @@
 package com.techaas.dto.responses
 
-import com.techaas.data_entities.ProductWithDate
+import com.techaas.dto.ProductWithDate
 
 data class TempProductsResponse(
     val products: List<ProductWithDate>

@@ -1,10 +1,9 @@
-package com.techaas.domain.qra
+package com.techaas.services
 
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.techaas.data_entities.Product
-import com.techaas.data_entities.ProductWithDate
-import com.techaas.data_entities.ProductWithoutWeight
+import com.techaas.dto.ProductWithDate
+import com.techaas.dto.ProductWithoutWeight
 import com.techaas.dto.requests.DecodeReceiptRequest
 import io.github.cdimascio.dotenv.Dotenv
 import okhttp3.Request

@@ -1,13 +1,11 @@
 package com.techaas.services
 
-import com.techaas.data_entities.Product
-import com.techaas.data_entities.ProductWithDate
+import com.techaas.dto.ProductWithDate
 import com.techaas.domain.entity.ProductEntity
 import com.techaas.domain.entity.UserEntity
 import com.techaas.domain.jpa.JpaProductService
 import com.techaas.domain.jpa.JpaUserProductService
 import com.techaas.domain.jpa.JpaUserService
-import com.techaas.domain.qra.QrAnalyzerService
 import com.techaas.dto.requests.AddProductRequest
 import com.techaas.dto.requests.DecodeReceiptRequest
 import com.techaas.dto.requests.FinallyAddProductsRequest
@@ -15,8 +13,6 @@ import com.techaas.dto.responses.TempProductsResponse
 import jakarta.transaction.Transactional
 import lombok.RequiredArgsConstructor
 import org.springframework.stereotype.Component
-import org.springframework.stereotype.Service
-import java.sql.Timestamp
 
 @Component
 @RequiredArgsConstructor

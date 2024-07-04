@@ -1,10 +1,13 @@
 package com.techaas.dto
 
-import java.sql.Timestamp
+import java.math.BigDecimal
 
 data class Product(
-    val id: Long,
+    val id: Int,
     val name: String,
-    val weight: Double,
-    val expirationTime: Timestamp
+    val weight: BigDecimal,
+    val kcal: BigDecimal,
+    val proteins: BigDecimal,
+    val fats: BigDecimal,
+    val carbohydrates: BigDecimal
 )
