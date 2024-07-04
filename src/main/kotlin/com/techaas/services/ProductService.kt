@@ -1,11 +1,11 @@
 package com.techaas.services
 
-import com.techaas.dto.ProductWithDate
 import com.techaas.domain.entity.ProductEntity
 import com.techaas.domain.entity.UserEntity
 import com.techaas.domain.jpa.JpaProductService
 import com.techaas.domain.jpa.JpaUserProductService
 import com.techaas.domain.jpa.JpaUserService
+import com.techaas.dto.ProductWithDate
 import com.techaas.dto.requests.AddProductRequest
 import com.techaas.dto.requests.DecodeReceiptRequest
 import com.techaas.dto.requests.FinallyAddProductsRequest
@@ -23,11 +23,12 @@ class ProductService(
     private val jpaUserProductService: JpaUserProductService
 ) {
     @Transactional
-    fun saveProducts(finallyAddProductsRequest: FinallyAddProductsRequest){
+    fun saveProducts(finallyAddProductsRequest: FinallyAddProductsRequest) {
+        val userEntity: UserEntity = jpaUserService.getUser(finallyAddProductsRequest.login)
         for (product: ProductWithDate in finallyAddProductsRequest.products) {
-            val userEntity: UserEntity = jpaUserService.getUser(finallyAddProductsRequest.login)
-            var productToAdd: ProductEntity? = jpaProductService.getProductByName(product.name)
-            if (productToAdd == null) {
+            var productToAdd: ProductEntity
+            if (!jpaProductService.existProduct(product.name, product.weight)) {
+                productToAdd = jpaProductService.getProductByNameAndWeight(product.name, product.weight)
                 jpaProductService.saveProduct(
                     name = product.name,
                     carbohydrates = product.carbohydrates,
@@ -36,16 +37,16 @@ class ProductService(
                     proteins = product.proteins,
                     weight = product.weight,
                 )
-                productToAdd = jpaProductService.getProductByName(product.name)
+            } else {
+                productToAdd = jpaProductService.getProductByNameAndWeight(product.name, product.weight)
             }
-            if (productToAdd != null) {
-                jpaUserProductService.saveProduct(
-                    user = userEntity,
-                    expirationDate = product.date,
-                    product = productToAdd,
-                    weight = product.weight,
-                )
-            }
+            jpaUserProductService.saveProduct(
+                user = userEntity,
+                expirationDate = product.date,
+                product = productToAdd,
+                weight = product.weight,
+            )
+
         }
     }
 
