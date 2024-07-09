@@ -33,7 +33,7 @@ class JpaProductServiceTest : IntegrationTest() {
     fun testSaveAndGetProduct() {
         jpaProductService.saveProduct(name, weight, carbohydrates, kcal, fats, proteins)
 
-        val product = jpaProductService.getProductByName(name)
+        val product = jpaProductService.getProductByNameAndWeight(name, weight)
 
         assertNotNull(product)
         assertEquals(name, product.name)

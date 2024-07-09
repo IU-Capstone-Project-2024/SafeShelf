@@ -10,7 +10,7 @@ spring:
     password: postgres
     driver-class-name: org.postgresql.Driver
     hikari:
-      connection-timeout: 20000
+      connection-timeout: 50000
       maximum-pool-size: 10
   jpa:
     hibernate:

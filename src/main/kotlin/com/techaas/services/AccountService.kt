@@ -21,7 +21,6 @@ class AccountService(
     private val authenticationService: AuthenticationService
 ) {
     fun login(accountRequest: LoginAccountRequest): LoginAccountResponse {
-//        println(accountRequest.login)
         return authenticationService.authentication(accountRequest)
     }
 

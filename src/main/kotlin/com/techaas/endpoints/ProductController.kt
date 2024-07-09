@@ -21,14 +21,13 @@ class ProductController(
 
     @PostMapping("/get_temp_products")
     fun getTempProducts(@RequestBody request: AddProductRequest): List<ProductWithDate> {
+        println(request)
         val result = productService.getTempProducts(request)
         return result
     }
 
     @GetMapping("/{id}")
-    fun get(
-        @PathVariable(value = "id") id: Long
-    ): Product? {
+    fun get(@PathVariable(value = "id") id: Long): ProductWithDate? {
         return null
     }
 
