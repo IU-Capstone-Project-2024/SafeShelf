@@ -19,7 +19,8 @@ class UserRepository(
             name = "Andrew",
             surname = "Lex",
             age = 20,
-            sex = Sex.M
+            sex = Sex.M,
+            lifestyle = "Gay"
         ),
         UserEntity(
             id = 1,
@@ -28,7 +29,8 @@ class UserRepository(
             name = "Nikolai",
             surname = "Jonez",
             age = 20,
-            sex = Sex.M
+            sex = Sex.M,
+            lifestyle = "Gay"
         ),
         UserEntity(
             id = 2,
@@ -37,7 +39,8 @@ class UserRepository(
             name = "Emil",
             surname = "Asstrahan",
             age = 20,
-            sex = Sex.M
+            sex = Sex.M,
+            lifestyle = "Gay"
         ),
     )
 

@@ -35,7 +35,8 @@ class AccountService(
             registerRequest.name,
             registerRequest.surname,
             registerRequest.age,
-            registerRequest.sex
+            registerRequest.sex,
+            registerRequest.lifestyle
         )
     }
 
@@ -51,7 +52,8 @@ class AccountService(
             updateAccount.name,
             updateAccount.surname,
             updateAccount.age,
-            updateAccount.sex
+            updateAccount.sex,
+            updateAccount.lifestyle
         )
         return UserDataResponse(
             updateAccount.login,
@@ -59,7 +61,8 @@ class AccountService(
             updateAccount.name,
             updateAccount.surname,
             updateAccount.age,
-            updateAccount.sex
+            updateAccount.sex,
+            updateAccount.lifestyle
         )
     }
 
@@ -72,7 +75,8 @@ class AccountService(
             name = user.name,
             surname = user.surname,
             age = user.age,
-            sex = user.sex
+            sex = user.sex,
+            lifestyle = user.lifestyle
         )
         return userResponse
     }
