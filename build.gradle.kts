@@ -12,7 +12,6 @@ plugins {
 group = "com.example"
 version = "0.0.1-SNAPSHOT"
 
-val testContainerVersion = "1.19.0"
 
 java {
     toolchain {
@@ -40,9 +39,8 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-data-rest")
     implementation("org.springframework.boot:spring-boot-starter-validation")
-    implementation("org.slf4j:log4j-over-slf4j")
     implementation("org.springframework.boot:spring-boot-starter-webflux")
-    implementation("org.json:json:20210307")
+    implementation("org.json:json:20231013")
     implementation("io.github.cdimascio:dotenv-java:2.2.0")
     implementation("com.google.code.gson:gson:2.8.9")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
@@ -52,10 +50,6 @@ dependencies {
     implementation("io.jsonwebtoken:jjwt-jackson:0.12.3")
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("com.squareup.okhttp3:okhttp:4.10.0")
-    compileOnly("org.projectlombok:lombok")
-    annotationProcessor("org.projectlombok:lombok")
-    implementation("org.postgresql:postgresql")
-    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2")
     compileOnly("org.projectlombok:lombok:1.18.34")
     annotationProcessor("org.projectlombok:lombok:1.18.34")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.12.3")
@@ -71,12 +65,12 @@ dependencies {
     testImplementation("org.testcontainers:junit-jupiter")
     testImplementation("org.testcontainers:postgresql")
     testImplementation("org.springframework.security:spring-security-test")
-    testImplementation("org.testcontainers:postgresql:$testContainerVersion")
+    testImplementation("org.testcontainers:postgresql:1.19.0")
 }
 
 dependencyManagement {
     imports {
-        mavenBom("org.testcontainers:testcontainers-bom:$testContainerVersion")
+        mavenBom("org.testcontainers:testcontainers-bom:1.19.0")
     }
 }
 

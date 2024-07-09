@@ -4,6 +4,7 @@ import jakarta.persistence.*
 import lombok.Getter
 import java.math.BigDecimal
 import java.sql.Timestamp
+import java.time.LocalDate
 
 @Entity
 @Table(name = "user_product")
@@ -16,15 +17,15 @@ data class UserProductEntity(
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
-    val user: UserEntity?,
+    val user: UserEntity,
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false)
-    val product: ProductEntity?,
+    val product: ProductEntity,
 
     @Column(name = "expiration_date")
-    var expirationDate: Timestamp,
+    var expirationDate: LocalDate,
 
     @Column(name = "weight")
-    var weight: BigDecimal?
+    var weight: BigDecimal
 )

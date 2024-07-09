@@ -11,9 +11,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/receipt")
-class ReceiptDecoderController(
-    private val qrAnalyzerService: QrAnalyzerService
-) {
+class ReceiptDecoderController(private val qrAnalyzerService: QrAnalyzerService) {
 
     @PostMapping("/decode")
     fun getReceipt(@RequestBody decodeReceiptRequest: DecodeReceiptRequest): List<ProductWithDate> {

@@ -2,6 +2,7 @@ package com.techaas.dto
 
 import java.math.BigDecimal
 import java.sql.Timestamp
+import java.time.LocalDate
 
 data class ProductWithDate(
     val id: Int,
@@ -11,5 +12,5 @@ data class ProductWithDate(
     val proteins: BigDecimal,
     val fats: BigDecimal,
     val carbohydrates: BigDecimal,
-    val date: Timestamp
+    val date: LocalDate
 )

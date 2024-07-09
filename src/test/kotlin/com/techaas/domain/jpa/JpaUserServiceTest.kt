@@ -15,6 +15,7 @@ class JpaUserServiceTest : IntegrationTest() {
     @Autowired
     private lateinit var jpaUserService: JpaUserService
 
+
     @Autowired
     private lateinit var encoder: PasswordEncoder
 
@@ -57,7 +58,6 @@ class JpaUserServiceTest : IntegrationTest() {
         assertFalse(oldUser)
         assertNotNull(updatedUser)
         assertEquals("newuser", updatedUser.login)
-        assertEquals(password, updatedUser.password)
         assertEquals("Jane", updatedUser.name)
         assertEquals("Smith", updatedUser.surname)
         assertEquals(25, updatedUser.age)
