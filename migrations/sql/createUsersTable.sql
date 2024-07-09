@@ -6,5 +6,6 @@ CREATE TABLE IF NOT EXISTS Users
     name     VARCHAR(255),
     surname  VARCHAR(255),
     age      INT,
-    sex      CHAR(1)
+    sex      CHAR(1),
+    lifestyle VARCHAR(255)
 );
