@@ -17,14 +17,15 @@ class JpaUserService(
         return baseUserRepository.existsUsersEntityByLogin(login)
     }
 
-    fun saveUser(login: String, password: String, name: String, surname: String, age: Int, sex: Sex) {
+    fun saveUser(login: String, password: String, name: String, surname: String, age: Int, sex: Sex, lifestyle: String) {
         val userEntity = UserEntity(
             login = login,
             password = encoder.encode(password),
             name = name,
             surname = surname,
             age = age,
-            sex = sex
+            sex = sex,
+            lifestyle = lifestyle
         )
         baseUserRepository.save(userEntity)
     }
@@ -36,7 +37,8 @@ class JpaUserService(
         name: String,
         surname: String,
         age: Int,
-        sex: Sex
+        sex: Sex,
+        lifestyle: String
     ) {
         val usersEntity = baseUserRepository.findByLogin(oldLogin)
         usersEntity.login = login
@@ -45,6 +47,7 @@ class JpaUserService(
         usersEntity.surname = surname
         usersEntity.age = age
         usersEntity.sex = sex
+        usersEntity.lifestyle = lifestyle
         baseUserRepository.save(usersEntity)
     }
 
