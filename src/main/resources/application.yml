@@ -5,12 +5,12 @@ spring:
   liquibase:
     enabled: false
   datasource:
-    url: jdbc:postgresql://localhost:5434/safeshelf
+    url: jdbc:postgresql://localhost:5432/safeshelf
     username: postgres
     password: postgres
     driver-class-name: org.postgresql.Driver
     hikari:
-      connection-timeout: 20000
+      connection-timeout: 50000
       maximum-pool-size: 10
   jpa:
     hibernate:

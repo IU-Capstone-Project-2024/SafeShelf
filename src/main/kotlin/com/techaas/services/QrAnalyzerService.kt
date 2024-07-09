@@ -1,9 +1,9 @@
-package com.techaas.domain.qra
+package com.techaas.services
 
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.techaas.data_entities.Product
-import com.techaas.data_entities.ProductWithoutWeight
+import com.techaas.dto.ProductWithDate
+import com.techaas.dto.ProductWithoutWeight
 import com.techaas.dto.requests.DecodeReceiptRequest
 import io.github.cdimascio.dotenv.Dotenv
 import okhttp3.Request
@@ -15,6 +15,9 @@ import okhttp3.OkHttpClient
 import org.json.JSONObject
 import java.io.File
 import java.io.IOException
+import java.math.BigDecimal
+import java.sql.Timestamp
+import java.time.LocalDate
 
 @Component
 class QrAnalyzerService {
@@ -34,7 +37,7 @@ class QrAnalyzerService {
         }
     }
 
-    fun getReceipt(@RequestBody decodeReceiptRequest: DecodeReceiptRequest): List<Product> {
+    fun getReceipt(@RequestBody decodeReceiptRequest: DecodeReceiptRequest): List<ProductWithDate> {
         val rawReceiptId = decodeReceiptRequest.rawReceiptId
         val client = OkHttpClient().newBuilder()
             .build()
@@ -57,7 +60,7 @@ class QrAnalyzerService {
         return filteredResponse
     }
 
-    private fun filterJson(responseBody: String?): List<Product> {
+    private fun filterJson(responseBody: String?): List<ProductWithDate> {
         if (responseBody == null) return emptyList()
 
         val json = JSONObject(responseBody)
@@ -76,7 +79,9 @@ class QrAnalyzerService {
 
             val weightPattern = "\\d+(\\.\\d+)?\\p{L}+".toRegex()
             val weightMatch = weightPattern.find(name)
-            val weight = weightMatch?.value ?: ""
+            val weight = weightMatch?.value?.let {
+                it.replace("\\p{L}+".toRegex(), "") // remove the unit
+            } ?: "0"
             val cleanedName = name.replace(weightPattern, "").trim()
 
             JSONObject().apply {
@@ -95,24 +100,32 @@ class QrAnalyzerService {
 
             val id = jsonItem.getInt("id")
             val name = jsonItem.getString("name")
-            val kcal = jsonItem.getString("kcal")
-            val proteins = jsonItem.getDouble("proteins")
-            val fats = jsonItem.getDouble("fats")
-            val carbohydrates = jsonItem.getDouble("carbohydrates")
-            val weight = jsonItem.getString("weight")
+            val kcal = jsonItem.optBigDecimal("kcal")
+            val proteins = jsonItem.optBigDecimal("proteins")
+            val fats = jsonItem.optBigDecimal("fats")
+            val carbohydrates = jsonItem.optBigDecimal("carbohydrates")
+            val weight = jsonItem.optBigDecimal("weight")
 
-            Product(
+            ProductWithDate(
                 id = id,
                 name = name,
                 kcal = kcal,
                 proteins = proteins,
                 fats = fats,
                 carbohydrates = carbohydrates,
-                weight = weight
+                weight = weight,
+                date = LocalDate.now()
             )
         }
     }
 
+    private fun JSONObject.optBigDecimal(key: String): BigDecimal {
+        return when (val value = this.opt(key)) {
+            is Number -> BigDecimal(value.toString())
+            is String -> BigDecimal(value)
+            else -> BigDecimal.ZERO
+        }
+    }
 
     private fun findProductByFirstWord(name: String): ProductWithoutWeight? {
         val searchWord = name.split(" ")[0].lowercase(Locale.getDefault())

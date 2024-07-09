@@ -1,7 +1,6 @@
 package com.techaas.configuration
 
 import com.techaas.domain.jpa.JpaUserService
-import com.techaas.repository.UserRepository
 import com.techaas.services.CustomUserDetailsService
 import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean
@@ -16,7 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder
 
 @Configuration
 @EnableConfigurationProperties(JwtProperties::class)
-class Configuration {
+class AuthenticationConfiguration {
     @Bean
     fun userDetailsService(jpaUserService: JpaUserService): UserDetailsService =
         CustomUserDetailsService(jpaUserService)
