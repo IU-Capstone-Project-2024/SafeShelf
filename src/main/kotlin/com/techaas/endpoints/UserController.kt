@@ -15,16 +15,13 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("/account")
 class UserController(
     private val accountService: AccountService,
-    private val authenticationService: AuthenticationService
 ) {
     @PostMapping("/register")
-    @ResponseStatus(HttpStatus.OK)
     fun register(@RequestBody registerAccount: RegisterAccountRequest) {
         accountService.registration(registerAccount)
     }
 
     @PostMapping("/login")
-    @ResponseStatus(HttpStatus.OK)
     fun login(@RequestBody loginAccount: LoginAccountRequest): LoginAccountResponse {
         return accountService.login(loginAccount)
     }
