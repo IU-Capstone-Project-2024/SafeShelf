@@ -28,10 +28,11 @@ class JpaUserServiceTest : IntegrationTest() {
     val weight = 55
     val sex = Sex.M
     val lifestyle = "Office worker"
+    val goal = "less"
 
     @Test
     fun checkIfTheUserExists() {
-        jpaUserService.saveUser(login, password, name, surname, height, weight, age, sex, lifestyle)
+        jpaUserService.saveUser(login, password, name, surname, height, weight, age, sex, lifestyle, goal)
 
         assertTrue(jpaUserService.checkIfTheUserExists(login))
         assertFalse(jpaUserService.checkIfTheUserExists("nonexistentuser"))
@@ -39,7 +40,7 @@ class JpaUserServiceTest : IntegrationTest() {
 
     @Test
     fun saveUser() {
-        jpaUserService.saveUser(login, password, name, surname, height, weight, age, sex, lifestyle)
+        jpaUserService.saveUser(login, password, name, surname, height, weight, age, sex, lifestyle, goal)
 
         val user = jpaUserService.getUser(login)
         assertNotNull(user)
@@ -52,10 +53,10 @@ class JpaUserServiceTest : IntegrationTest() {
 
     @Test
     fun updateUser() {
-        jpaUserService.saveUser(login, password, name, surname, height, weight, age, sex, lifestyle)
+        jpaUserService.saveUser(login, password, name, surname, height, weight, age, sex, lifestyle, goal)
 
         jpaUserService.updateUser(login, "newuser", password, "Jane", "Smith",
-            111, 1111, 25, Sex.F, lifestyle)
+            111, 1111, 25, Sex.F, lifestyle, goal)
 
         val updatedUser = jpaUserService.getUser("newuser")
         val oldUser = jpaUserService.checkIfTheUserExists(login)
@@ -72,7 +73,7 @@ class JpaUserServiceTest : IntegrationTest() {
 
     @Test
     fun checkAuthorizationAccess() {
-        jpaUserService.saveUser(login, password, name, surname, height, weight, age, sex, lifestyle)
+        jpaUserService.saveUser(login, password, name, surname, height, weight, age, sex, lifestyle, goal)
 
         assertTrue(jpaUserService.checkIfTheUserExists(login))
         assertTrue(jpaUserService.checkAuthorizationAccess(login, password))
@@ -81,7 +82,7 @@ class JpaUserServiceTest : IntegrationTest() {
 
     @Test
     fun getUser() {
-        jpaUserService.saveUser(login, password, name, surname, height, weight, age, sex, lifestyle)
+        jpaUserService.saveUser(login, password, name, surname, height, weight, age, sex, lifestyle, goal)
 
         val user = jpaUserService.getUser(login)
 
@@ -95,8 +96,8 @@ class JpaUserServiceTest : IntegrationTest() {
     fun findAll() {
         val login1 = "testuser1"
         val login2 = "testuser2"
-        jpaUserService.saveUser(login1, "password123", "John", "Doe",height, weight, 30, Sex.M, lifestyle)
-        jpaUserService.saveUser(login2, "password456", "Jane", "Smith", height, weight,25, Sex.F, lifestyle)
+        jpaUserService.saveUser(login1, "password123", "John", "Doe",height, weight, 30, Sex.M, lifestyle, goal)
+        jpaUserService.saveUser(login2, "password456", "Jane", "Smith", height, weight,25, Sex.F, lifestyle, goal)
 
         val users = jpaUserService.findAll()
 
