@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("/account")
 class UserController(
     private val accountService: AccountService,
-    private val authenticationService: AuthenticationService
 ) {
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.OK)
