@@ -1,14 +1,18 @@
 package com.techaas.services
 
+import com.techaas.domain.entity.ProductEntity
 import com.techaas.domain.entity.UserEntity
+import com.techaas.domain.entity.UserProductEntity
 import com.techaas.domain.jpa.JpaProductService
 import com.techaas.domain.jpa.JpaUserProductService
 import com.techaas.domain.jpa.JpaUserService
 import com.techaas.dto.ProductWithDate
 import com.techaas.dto.requests.AddProductRequest
 import com.techaas.dto.requests.DecodeReceiptRequest
+import com.techaas.dto.requests.DeleteProductRequest
 import com.techaas.dto.requests.FinallyAddProductsRequest
 import com.techaas.dto.responses.TempProductsResponse
+import com.techaas.dto.responses.UserProductsRepsonse
 import jakarta.transaction.Transactional
 import lombok.RequiredArgsConstructor
 import org.springframework.stereotype.Service
@@ -44,5 +48,34 @@ class ProductService(
         val decodeReceiptRequest = DecodeReceiptRequest(rawReceiptId)
         val parsedProducts = qrAnalyzerService.getReceipt(decodeReceiptRequest)
         return TempProductsResponse(parsedProducts).products
+    }
+
+    @Transactional
+    fun getProducts(login: String): List<UserProductsRepsonse> {
+        val userEntity: UserEntity = jpaUserService.getUser(login)
+        val userProductEntities: List<UserProductEntity> = jpaUserProductService.getProductsByUser(userEntity)
+        val result: MutableList<UserProductsRepsonse> = mutableListOf()
+        for (product in userProductEntities) {
+            val originalProductEntity : ProductEntity = product.product
+            val response = UserProductsRepsonse(
+                id = product.id,
+                name = originalProductEntity.name,
+                weight = product.weight,
+                kcal = originalProductEntity.kcal,
+                proteins = originalProductEntity.proteins,
+                fats = originalProductEntity.fats,
+                carbohydrates = originalProductEntity.carbohydrates,
+                date = product.expirationDate.toString()
+            )
+            result.add(response)
+        }
+        return result
+    }
+
+    @Transactional
+    fun deleteProduct(deleteProductRequest: DeleteProductRequest) {
+        val user: UserEntity = jpaUserService.getUser(deleteProductRequest.login)
+        val product : ProductEntity = jpaProductService.getProductEntityByID(deleteProductRequest.productID)
+        jpaUserProductService.deleteProduct(user, product)
     }
 }

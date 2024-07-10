@@ -42,5 +42,7 @@ class JpaProductService(
         return baseProductRepository.findAll()
     }
 
-
+    fun getProductEntityByID(id: Long): ProductEntity {
+        return baseProductRepository.getProductEntityById(id)
+    }
 }
