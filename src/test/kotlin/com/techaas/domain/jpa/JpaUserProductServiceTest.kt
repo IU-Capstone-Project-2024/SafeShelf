@@ -35,8 +35,12 @@ class JpaUserProductServiceTest : IntegrationTest() {
     val password = "password123"
     val name = "John"
     val surname = "Doe"
+    val height = 160
+    val weight = 55
     val age = 30
     val sex = Sex.M
+    val lifestyle = "Office worker"
+
 
     val nameProduct = "TestProduct"
     val weightProduct = BigDecimal("2.5")
@@ -53,7 +57,7 @@ class JpaUserProductServiceTest : IntegrationTest() {
 
 
     fun preparation() {
-        jpaUserService.saveUser(login, password, name, surname, age, sex)
+        jpaUserService.saveUser(login, password, name, surname, height, weight, age, sex, lifestyle)
         account = jpaUserService.getUser(login)
         jpaProductService.saveProduct(
             nameProduct,

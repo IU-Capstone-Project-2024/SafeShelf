@@ -23,6 +23,12 @@ data class UserEntity(
     @Column(name = "surname")
     var surname: String,
 
+    @Column(name = "height")
+    var height: Int,
+
+    @Column(name = "weight")
+    var weight: Int,
+
     @Column(name = "age")
     var age: Int,
 
@@ -31,5 +37,8 @@ data class UserEntity(
     var sex: Sex,
 
     @Column(name = "lifestyle")
-    var lifestyle: String
+    var lifestyle: String,
+
+    @Column(name = "goal")
+    var goal: String
 )
