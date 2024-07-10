@@ -28,5 +28,8 @@ data class UserEntity(
 
     @Column(name = "sex")
     @Enumerated(EnumType.STRING)
-    var sex: Sex
+    var sex: Sex,
+
+    @Column(name = "lifestyle")
+    var lifestyle: String
 )

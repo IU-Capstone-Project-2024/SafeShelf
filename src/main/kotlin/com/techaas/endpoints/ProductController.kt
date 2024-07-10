@@ -21,8 +21,8 @@ class ProductController(
 
     @PostMapping("/get_temp_products")
     fun getTempProducts(@RequestBody request: AddProductRequest): List<ProductWithDate> {
-        println(request)
         val result = productService.getTempProducts(request)
+        println(result)
         return result
     }
 

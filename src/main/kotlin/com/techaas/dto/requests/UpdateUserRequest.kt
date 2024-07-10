@@ -9,5 +9,6 @@ data class UpdateUserRequest (
     val surname: String,
     val password: String,
     val age: Int,
-    val sex: Sex
+    val sex: Sex,
+    val lifestyle: String
 )

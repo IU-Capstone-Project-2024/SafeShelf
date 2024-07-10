@@ -8,5 +8,6 @@ data class UserDataResponse(
     val name: String,
     val surname: String,
     val age: Int,
-    val sex: Sex
+    val sex: Sex,
+    val lifestyle: String
 )
