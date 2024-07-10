@@ -23,10 +23,22 @@ data class UserEntity(
     @Column(name = "surname")
     var surname: String,
 
+    @Column(name = "height")
+    var height: Int,
+
+    @Column(name = "weight")
+    var weight: Int,
+
     @Column(name = "age")
     var age: Int,
 
     @Column(name = "sex")
     @Enumerated(EnumType.STRING)
-    var sex: Sex
+    var sex: Sex,
+
+    @Column(name = "lifestyle")
+    var lifestyle: String,
+
+    @Column(name = "goal")
+    var goal: String
 )

@@ -6,19 +6,19 @@ import com.techaas.dto.ProductWithDate
 import com.techaas.dto.ProductWithoutWeight
 import com.techaas.dto.requests.DecodeReceiptRequest
 import io.github.cdimascio.dotenv.Dotenv
-import okhttp3.Request
-import org.springframework.stereotype.Component
-import org.springframework.web.bind.annotation.RequestBody
-import java.util.*
 import okhttp3.FormBody
 import okhttp3.OkHttpClient
 import org.json.JSONArray
+import okhttp3.Request
 import org.json.JSONObject
+import org.springframework.stereotype.Component
+import org.springframework.web.bind.annotation.RequestBody
 import java.io.File
 import java.io.IOException
 import java.math.BigDecimal
 import java.time.format.DateTimeFormatter
 import java.time.LocalDate
+import java.util.*
 
 @Component
 class QrAnalyzerService {
@@ -38,7 +38,12 @@ class QrAnalyzerService {
             val jsonString = jsonFile.readText()
             val gson = Gson()
             val productListType = object : TypeToken<List<ProductWithoutWeight>>() {}.type
-            products = gson.fromJson(jsonString, productListType)
+            val originalProducts = gson.fromJson<List<ProductWithoutWeight>>(jsonString, productListType)
+
+            // Enumerate products starting from 0
+            products = originalProducts.mapIndexed { index, product ->
+                product.copy(id = index)
+            }
         }
     }
 
@@ -137,10 +142,10 @@ class QrAnalyzerService {
                 }
             }
             val product = findProductByFirstWord(name)
-            val kcal = product?.kcal ?: "0"
-            val proteins = product?.proteins ?: 0.0
-            val fats = product?.fats ?: 0.0
-            val carbohydrates = product?.carbohydrates ?: 0.0
+            val kcal = product?.kcal ?: BigDecimal.ZERO
+            val proteins = product?.proteins ?: BigDecimal.ZERO
+            val fats = product?.fats ?: BigDecimal.ZERO
+            val carbohydrates = product?.carbohydrates ?: BigDecimal.ZERO
 
             val weightPattern = "\\d+(\\.\\d+)?\\p{L}+".toRegex()
             val weightMatch = weightPattern.find(name)
@@ -159,10 +164,10 @@ class QrAnalyzerService {
             }
         }
 
-        return filteredItems.map { item ->
+        return filteredItems.mapIndexed { index, item ->
             val jsonItem = item
 
-            val id = jsonItem.getInt("id")
+            val id = index
             val name = jsonItem.getString("name")
             val kcal = jsonItem.optBigDecimal("kcal")
             val proteins = jsonItem.optBigDecimal("proteins")

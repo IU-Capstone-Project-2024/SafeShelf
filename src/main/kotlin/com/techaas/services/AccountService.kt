@@ -6,10 +6,8 @@ import com.techaas.dto.requests.RegisterAccountRequest
 import com.techaas.dto.requests.UpdateUserRequest
 import com.techaas.dto.responses.LoginAccountResponse
 import com.techaas.dto.responses.UserDataResponse
-import com.techaas.exceptions.LoginPasswordMismatchException
 import com.techaas.exceptions.RepeatLoginAfterUpdateException
 import com.techaas.exceptions.UserAlreadyExistsException
-import com.techaas.exceptions.UserDoesntExistException
 import jakarta.transaction.Transactional
 import lombok.RequiredArgsConstructor
 import org.springframework.stereotype.Component
@@ -34,32 +32,44 @@ class AccountService(
             registerRequest.password,
             registerRequest.name,
             registerRequest.surname,
+            registerRequest.height,
+            registerRequest.weight,
             registerRequest.age,
-            registerRequest.sex
+            registerRequest.sex,
+            registerRequest.lifestyle,
+            registerRequest.goal
         )
     }
 
     @Transactional
     fun updateInfo(updateAccount: UpdateUserRequest): UserDataResponse {
-        if (!jpaUserService.checkIfTheUserExists(updateAccount.oldLogin)) {
-            throw RepeatLoginAfterUpdateException("User with this login already exists, please use new login")
+        if (jpaUserService.checkIfTheUserExists(updateAccount.login) && updateAccount.login != updateAccount.oldLogin) {
+            throw RepeatLoginAfterUpdateException("User with this login already exist")
         }
+
         jpaUserService.updateUser(
             updateAccount.oldLogin,
             updateAccount.login,
             updateAccount.password,
             updateAccount.name,
             updateAccount.surname,
+            updateAccount.height,
+            updateAccount.weight,
             updateAccount.age,
-            updateAccount.sex
+            updateAccount.sex,
+            updateAccount.lifestyle,
+            updateAccount.goal
         )
         return UserDataResponse(
             updateAccount.login,
-            updateAccount.password,
             updateAccount.name,
             updateAccount.surname,
+            updateAccount.height,
+            updateAccount.weight,
             updateAccount.age,
-            updateAccount.sex
+            updateAccount.sex,
+            updateAccount.lifestyle,
+            updateAccount.goal
         )
     }
 
@@ -68,11 +78,14 @@ class AccountService(
         val user = jpaUserService.getUser(login)
         val userResponse = UserDataResponse(
             login = user.login,
-            password = user.password,
             name = user.name,
             surname = user.surname,
+            height = user.height,
+            weight = user.weight,
             age = user.age,
-            sex = user.sex
+            sex = user.sex,
+            lifestyle = user.lifestyle,
+            goal = user.goal
         )
         return userResponse
     }

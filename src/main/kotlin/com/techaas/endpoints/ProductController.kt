@@ -14,20 +14,18 @@ class ProductController(
     private val productService: ProductService
 ) {
     @PostMapping("/save")
-    @ResponseStatus(HttpStatus.OK)
     fun add(@RequestBody request: FinallyAddProductsRequest) {
         productService.saveProducts(request)
     }
 
     @PostMapping("/get_temp_products")
     fun getTempProducts(@RequestBody request: AddProductRequest): List<ProductWithDate> {
-        println(request)
         val result = productService.getTempProducts(request)
         return result
     }
 
-    @GetMapping("/{id}")
-    fun get(@PathVariable(value = "id") id: Long): ProductWithDate? {
+    @GetMapping("/{login}")
+    fun get(@PathVariable(value = "login") login: String): List<ProductWithDate>? {
         return null
     }
 
