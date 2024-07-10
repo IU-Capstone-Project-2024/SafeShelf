@@ -7,10 +7,7 @@ import com.techaas.domain.jpa.JpaProductService
 import com.techaas.domain.jpa.JpaUserProductService
 import com.techaas.domain.jpa.JpaUserService
 import com.techaas.dto.ProductWithDate
-import com.techaas.dto.requests.AddProductRequest
-import com.techaas.dto.requests.DecodeReceiptRequest
-import com.techaas.dto.requests.DeleteProductRequest
-import com.techaas.dto.requests.FinallyAddProductsRequest
+import com.techaas.dto.requests.*
 import com.techaas.dto.responses.TempProductsResponse
 import com.techaas.dto.responses.UserProductsRepsonse
 import jakarta.transaction.Transactional
@@ -56,7 +53,7 @@ class ProductService(
         val userProductEntities: List<UserProductEntity> = jpaUserProductService.getProductsByUser(userEntity)
         val result: MutableList<UserProductsRepsonse> = mutableListOf()
         for (product in userProductEntities) {
-            val originalProductEntity : ProductEntity = product.product
+            val originalProductEntity: ProductEntity = product.product
             val response = UserProductsRepsonse(
                 id = product.id,
                 name = originalProductEntity.name,
@@ -75,7 +72,19 @@ class ProductService(
     @Transactional
     fun deleteProduct(deleteProductRequest: DeleteProductRequest) {
         val user: UserEntity = jpaUserService.getUser(deleteProductRequest.login)
-        val product : ProductEntity = jpaProductService.getProductEntityByID(deleteProductRequest.productID)
+        val product: ProductEntity = jpaProductService.getProductEntityByID(deleteProductRequest.productID)
         jpaUserProductService.deleteProduct(user, product)
+    }
+
+    @Transactional
+    fun updateProductDate(updateProductDateRequest: UpdateProductDateRequest) {
+        val user: UserEntity = jpaUserService.getUser(updateProductDateRequest.login)
+        val product: ProductEntity = jpaProductService.getProductEntityByID(updateProductDateRequest.productID)
+        if (jpaUserProductService.checkIfTheProductExistsForTheUser(user, product)) {
+            val userProductID: Long = jpaUserProductService.getProductByAccountAndProduct(user, product).id
+            jpaUserProductService.updateProductDate(userProductID, updateProductDateRequest.date)
+        } else {
+            // TODO : throw 404 (NOT FOUND) code
+        }
     }
 }

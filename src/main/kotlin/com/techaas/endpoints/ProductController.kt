@@ -6,6 +6,7 @@ import com.techaas.dto.ProductWithDate
 import com.techaas.dto.requests.AddProductRequest
 import com.techaas.dto.requests.DeleteProductRequest
 import com.techaas.dto.requests.FinallyAddProductsRequest
+import com.techaas.dto.requests.UpdateProductDateRequest
 import com.techaas.dto.responses.UserProductsRepsonse
 import com.techaas.services.ProductService
 import org.springframework.http.HttpStatus
@@ -37,4 +38,8 @@ class ProductController(
         productService.deleteProduct(request)
     }
 
+    @PatchMapping("update")
+    fun updateDate(@RequestBody request: UpdateProductDateRequest) {
+        productService.updateProductDate(request)
+    }
 }

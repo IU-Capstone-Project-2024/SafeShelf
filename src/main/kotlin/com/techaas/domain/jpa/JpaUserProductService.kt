@@ -71,4 +71,8 @@ class JpaUserProductService(
     fun findAll(): List<UserProductEntity> {
         return baseUserProductService.findAll()
     }
+
+    fun checkIfTheProductExistsForTheUser(user: UserEntity, product: ProductEntity): Boolean {
+        return baseUserProductService.existsByUserAndProduct(user, product)
+    }
 }
