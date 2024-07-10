@@ -39,7 +39,6 @@ class ProductService(
         }
     }
 
-    @Transactional
     fun getTempProducts(addProductEntity: AddProductRequest): List<ProductWithDate> {
         val rawReceiptId = addProductEntity.metaStringProducts
         val decodeReceiptRequest = DecodeReceiptRequest(rawReceiptId)
