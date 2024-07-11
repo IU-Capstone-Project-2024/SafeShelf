@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.security.crypto.password.PasswordEncoder
 
 @SpringBootTest
 @Transactional
@@ -15,9 +14,6 @@ class JpaUserServiceTest : IntegrationTest() {
     @Autowired
     private lateinit var jpaUserService: JpaUserService
 
-
-    @Autowired
-    private lateinit var encoder: PasswordEncoder
 
     val login = "testuser"
     val password = "password123"
@@ -55,8 +51,10 @@ class JpaUserServiceTest : IntegrationTest() {
     fun updateUser() {
         jpaUserService.saveUser(login, password, name, surname, height, weight, age, sex, lifestyle, goal)
 
-        jpaUserService.updateUser(login, "newuser", password, "Jane", "Smith",
-            111, 1111, 25, Sex.F, lifestyle, goal)
+        jpaUserService.updateUser(
+            login, "newuser", password, "Jane", "Smith",
+            111, 1111, 25, Sex.F, lifestyle, goal
+        )
 
         val updatedUser = jpaUserService.getUser("newuser")
         val oldUser = jpaUserService.checkIfTheUserExists(login)
@@ -96,8 +94,8 @@ class JpaUserServiceTest : IntegrationTest() {
     fun findAll() {
         val login1 = "testuser1"
         val login2 = "testuser2"
-        jpaUserService.saveUser(login1, "password123", "John", "Doe",height, weight, 30, Sex.M, lifestyle, goal)
-        jpaUserService.saveUser(login2, "password456", "Jane", "Smith", height, weight,25, Sex.F, lifestyle, goal)
+        jpaUserService.saveUser(login1, "password123", "John", "Doe", height, weight, 30, Sex.M, lifestyle, goal)
+        jpaUserService.saveUser(login2, "password456", "Jane", "Smith", height, weight, 25, Sex.F, lifestyle, goal)
 
         val users = jpaUserService.findAll()
 

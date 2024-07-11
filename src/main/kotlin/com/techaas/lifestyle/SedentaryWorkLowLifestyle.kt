@@ -1,5 +1,8 @@
 package com.techaas.lifestyle
 
+import org.springframework.stereotype.Component
+
+@Component
 class SedentaryWorkLowLifestyle: Lifestyle {
     override fun getName(): String {
         return "Sedentary work, light fitness"

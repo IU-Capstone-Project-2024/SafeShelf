@@ -9,7 +9,7 @@ import java.time.LocalDate
 import java.time.temporal.ChronoUnit
 
 @Component
-class ConvertToProduct {
+class ConvertToGenerator {
     fun convert(products: List<UserProductEntity>): List<ProductToGenerator> {
         return products.map { userProductEntity ->
             val product: ProductEntity = userProductEntity.product
