@@ -82,4 +82,12 @@ class JpaUserProductService(
     fun checkIfTheProductExistsForTheUser(user: UserEntity, product: ProductEntity): Boolean {
         return baseUserProductRepository.existsByUserAndProduct(user, product)
     }
+
+    fun getUserProductByID(id: Long) : UserProductEntity {
+        return baseUserProductService.getUserProductEntityById(id)
+    }
+
+    fun deleteUserProductEntityByID(id: Long) {
+        baseUserProductService.deleteUserProductEntityById(id)
+    }
 }
