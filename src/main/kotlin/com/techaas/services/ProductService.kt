@@ -70,9 +70,9 @@ class ProductService(
     }
 
     @Transactional
-    fun deleteProduct(deleteProductRequest: DeleteProductRequest) {
-        jpaUserProductService.deleteUserProductEntityByID(deleteProductRequest.productID)
-    }
+    fun deleteProduct(deleteProductRequest: DeleteProductRequest) =
+        jpaUserProductService.deleteUserProduct(deleteProductRequest.userProductID)
+
 
     @Transactional
     fun updateProductDate(updateProductDateRequest: UpdateProductDateRequest) {

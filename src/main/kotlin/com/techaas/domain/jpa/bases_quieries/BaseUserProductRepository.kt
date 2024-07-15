@@ -12,7 +12,7 @@ interface BaseUserProductRepository : JpaRepository<UserProductEntity, Long> {
     fun deleteUserProductEntityByUserAndProduct(user: UserEntity, product: ProductEntity)
     fun findByUserAndProduct(user: UserEntity, product: ProductEntity): UserProductEntity
     fun getUserProductEntityByUserAndProduct(user: UserEntity, product: ProductEntity): UserProductEntity
+    fun getUserProductEntityById(id: Long): UserProductEntity
     fun existsByUserAndProduct(user: UserEntity, product: ProductEntity): Boolean
-    fun getUserProductEntityById(id: Long) : UserProductEntity
     fun deleteUserProductEntityById(id: Long)
 }

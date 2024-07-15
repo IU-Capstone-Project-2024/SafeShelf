@@ -15,7 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder
 
 @Configuration
 @EnableConfigurationProperties(JwtProperties::class)
-class AuthenticationConfiguration {
+class AuthenticationConfig {
     @Bean
     fun userDetailsService(jpaUserService: JpaUserService): UserDetailsService =
         CustomUserDetailsService(jpaUserService)

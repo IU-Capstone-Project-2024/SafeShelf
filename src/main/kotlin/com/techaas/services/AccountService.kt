@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component
 @Component
 @RequiredArgsConstructor
 class AccountService(
-    val jpaUserService: JpaUserService,
+    private val jpaUserService: JpaUserService,
     private val authenticationService: AuthenticationService
 ) {
     fun login(accountRequest: LoginAccountRequest): LoginAccountResponse {

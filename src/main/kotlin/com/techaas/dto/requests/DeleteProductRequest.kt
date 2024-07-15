@@ -2,5 +2,5 @@ package com.techaas.dto.requests
 
 data class DeleteProductRequest (
     val login: String,
-    val productID: Long
+    val userProductID: Long
 )
