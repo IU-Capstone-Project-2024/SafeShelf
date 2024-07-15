@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service
 import org.springframework.web.reactive.function.BodyInserters
 import org.springframework.web.reactive.function.client.WebClient
 import org.springframework.web.reactive.function.client.awaitBody
+import org.springframework.web.reactive.function.client.body
 import reactor.core.publisher.Mono
 
 @Service
@@ -14,11 +15,14 @@ import reactor.core.publisher.Mono
 class GeneratorClient(
     private val generatorDishesClient: WebClient
 ) {
-    fun generateBreakfast(productToGenerator: ProductToGenerator) {
-//        return generatorDishesClient
-//            .post()
-//            .uri("/breakfast")
-//            .body(BodyInserters.)
-//            .accept(MediaType.APPLICATION_JSON)
+    suspend fun generateBreakfast(productToGenerator: ProductToGenerator): ProductToGenerator {
+        return generatorDishesClient
+            .post()
+            .uri("/breakfast")
+            .contentType(MediaType.APPLICATION_JSON)
+            .body<ProductToGenerator>(productToGenerator)
+            .retrieve()
+            .awaitBody<ProductToGenerator>()
     }
+
 }
