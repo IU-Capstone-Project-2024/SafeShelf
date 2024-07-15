@@ -1,13 +1,12 @@
 package com.techaas.endpoints
 
 import com.techaas.clients.GeneratorClient
+import com.techaas.domain.entity.DishesEntity
 import com.techaas.dto.requests.GenerateDishRequest
+import com.techaas.dto.responses.UserDishesResponse
 import com.techaas.services.DishService
 import lombok.RequiredArgsConstructor
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/dish")
@@ -23,11 +22,16 @@ class DishController(
 
     @PostMapping("/lunch/{login}")
     fun generateLunch(@PathVariable(name = "login") login: String) {
-
+        dishService.saveDish()
     }
 
     @PostMapping("/dinner/{login}")
     fun generateDinner(@PathVariable(name = "login") login: String) {
 
+    }
+
+    @GetMapping("/{login}")
+    fun getDishes(@PathVariable(name = "login") login: String): List<UserDishesResponse> {
+        return dishService.getDishesForTheUser(login)
     }
 }
