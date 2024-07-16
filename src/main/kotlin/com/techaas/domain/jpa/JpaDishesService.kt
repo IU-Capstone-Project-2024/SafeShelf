@@ -31,4 +31,12 @@ class JpaDishesService(
     fun getDishesByUser(userId: Long): List<DishesEntity> {
         return baseDishesRepository.findDishesEntityByUserId(userId)
     }
+
+    fun deleteDish(id : String) {
+        baseDishesRepository.deleteDishesEntityById(id)
+    }
+
+    fun findDishByID(id: String): DishesEntity {
+        return baseDishesRepository.findDishesEntityById(id)
+    }
 }

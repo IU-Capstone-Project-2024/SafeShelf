@@ -9,4 +9,6 @@ import org.springframework.stereotype.Repository
 interface BaseDishesRepository : MongoRepository<DishesEntity, Long> {
     fun save(dishesEntity: DishesEntity): DishesEntity
     fun findDishesEntityByUserId(userId: Long): List<DishesEntity>
+    fun deleteDishesEntityById(dishesEntityId: String)
+    fun findDishesEntityById(id: String): DishesEntity
 }

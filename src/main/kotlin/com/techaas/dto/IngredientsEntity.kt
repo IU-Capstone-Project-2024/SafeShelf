@@ -5,5 +5,5 @@ import java.math.BigDecimal
 data class IngredientsEntity (
     val userProductId : Long,
     val name : String,
-    val weight: Double
+    val weight: BigDecimal
     )

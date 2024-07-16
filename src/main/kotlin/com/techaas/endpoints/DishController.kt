@@ -2,6 +2,7 @@ package com.techaas.endpoints
 
 import com.techaas.clients.GeneratorClient
 import com.techaas.domain.entity.DishesEntity
+import com.techaas.dto.requests.CookedDishRequest
 import com.techaas.dto.requests.GenerateDishRequest
 import com.techaas.dto.responses.UserDishesResponse
 import com.techaas.services.DishService
@@ -32,6 +33,12 @@ class DishController(
 
     @GetMapping("/{login}")
     fun getDishes(@PathVariable(name = "login") login: String): List<UserDishesResponse> {
-        return dishService.getDishesForTheUser(login)
+        val result = dishService.getDishesForTheUser(login)
+        return result
+    }
+
+    @DeleteMapping("/cooked")
+    fun deleteCooked(@RequestBody cookedDishRequest: CookedDishRequest) {
+        dishService.cooked(cookedDishRequest)
     }
 }
