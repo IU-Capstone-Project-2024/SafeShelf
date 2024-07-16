@@ -16,7 +16,7 @@ import java.time.LocalDate
 @Component
 @RequiredArgsConstructor
 class JpaUserProductService(
-    private val baseUserProductService: BaseUserProductRepository,
+    private val baseUserProductRepository: BaseUserProductRepository,
     private val baseUserRepository: BaseUserRepository,
     private val baseProductRepository: BaseProductRepository
 ) {
@@ -24,12 +24,12 @@ class JpaUserProductService(
     fun saveProduct(user: UserEntity, product: ProductWithDate) {
         val productToAdd: ProductEntity =
             baseProductRepository.getProductEntityByNameAndWeight(product.name, product.weight)
-        if (baseUserProductService.existsByUserAndProduct(user, productToAdd)) {
-            val productUpdate = baseUserProductService.getUserProductEntityByUserAndProduct(user, productToAdd)
+        if (baseUserProductRepository.existsByUserAndProduct(user, productToAdd)) {
+            val productUpdate = baseUserProductRepository.getUserProductEntityByUserAndProduct(user, productToAdd)
             if (productUpdate.expirationDate == product.date) {
                 productUpdate.weight += product.weight
             }
-            baseUserProductService.save(productUpdate)
+            baseUserProductRepository.save(productUpdate)
         } else {
             val userProductModel = UserProductEntity(
                 user = user,
@@ -37,42 +37,57 @@ class JpaUserProductService(
                 weight = productToAdd.weight,
                 expirationDate = product.date
             )
-            baseUserProductService.save(userProductModel)
+            baseUserProductRepository.save(userProductModel)
         }
     }
 
     fun getProductsByUser(user: UserEntity): List<UserProductEntity> {
-        return baseUserProductService.getUserProductEntitiesByUser(user)
+        return baseUserProductRepository.getUserProductEntitiesByUser(user)
     }
 
     fun getProductByAccountAndProduct(user: UserEntity, product: ProductEntity): UserProductEntity {
-        return baseUserProductService.findByUserAndProduct(user, product)
+        return baseUserProductRepository.findByUserAndProduct(user, product)
     }
 
 
     fun updateProductWeight(id: Long, weight: BigDecimal) {
-        val userProductEntity = baseUserProductService.findById(id).orElse(null)
+        val userProductEntity = baseUserProductRepository.findById(id).orElse(null)
         if (userProductEntity != null) {
             userProductEntity.weight = weight
-            baseUserProductService.save(userProductEntity)
+            baseUserProductRepository.save(userProductEntity)
         }
     }
 
+    fun getUserProductEntityById(id: Long): UserProductEntity =
+        baseUserProductRepository.getUserProductEntityById(id)
+
+
     fun deleteProduct(user: UserEntity, product: ProductEntity) {
-        baseUserProductService.deleteUserProductEntityByUserAndProduct(user, product)
+        baseUserProductRepository.deleteUserProductEntityByUserAndProduct(user, product)
     }
 
+    fun deleteUserProduct(id: Long) = baseUserProductRepository.deleteUserProductEntityById(id)
+
+
     fun updateProductDate(userProductID: Long, expirationDate: LocalDate) {
-        val userProductEntity = baseUserProductService.findById(userProductID).orElse(null)
+        val userProductEntity = baseUserProductRepository.findById(userProductID).orElse(null)
         userProductEntity.expirationDate = expirationDate
-        baseUserProductService.save(userProductEntity)
+        baseUserProductRepository.save(userProductEntity)
     }
 
     fun findAll(): List<UserProductEntity> {
-        return baseUserProductService.findAll()
+        return baseUserProductRepository.findAll()
     }
 
     fun checkIfTheProductExistsForTheUser(user: UserEntity, product: ProductEntity): Boolean {
-        return baseUserProductService.existsByUserAndProduct(user, product)
+        return baseUserProductRepository.existsByUserAndProduct(user, product)
+    }
+
+    fun getUserProductByID(id: Long) : UserProductEntity {
+        return baseUserProductRepository.getUserProductEntityById(id)
+    }
+
+    fun deleteUserProductEntityByID(id: Long) {
+        baseUserProductRepository.deleteUserProductEntityById(id)
     }
 }
