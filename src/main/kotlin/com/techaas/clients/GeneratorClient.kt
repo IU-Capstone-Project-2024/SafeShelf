@@ -1,13 +1,13 @@
 package com.techaas.clients
 
-import com.techaas.dto.ProductToGenerator
+import com.techaas.dto.requests.GenerateDishRequest
 import lombok.RequiredArgsConstructor
 import org.springframework.http.MediaType
 import org.springframework.stereotype.Service
 import org.springframework.web.reactive.function.BodyInserters
 import org.springframework.web.reactive.function.client.WebClient
 import org.springframework.web.reactive.function.client.awaitBody
-import org.springframework.web.reactive.function.client.body
+import org.springframework.web.reactive.function.client.bodyToMono
 import reactor.core.publisher.Mono
 
 @Service
@@ -15,14 +15,14 @@ import reactor.core.publisher.Mono
 class GeneratorClient(
     private val generatorDishesClient: WebClient
 ) {
-    suspend fun generateBreakfast(productToGenerator: ProductToGenerator): ProductToGenerator {
+    suspend fun generateBreakfast(generateDishRequest: GenerateDishRequest): Mono<GenerateDishRequest> {
         return generatorDishesClient
             .post()
             .uri("/breakfast")
             .contentType(MediaType.APPLICATION_JSON)
-            .body<ProductToGenerator>(productToGenerator)
+            .body(BodyInserters.fromValue(generateDishRequest))
             .retrieve()
-            .awaitBody<ProductToGenerator>()
-    }
+            .bodyToMono(GenerateDishRequest::class.java)
 
+    }
 }

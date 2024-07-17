@@ -17,8 +17,10 @@ class DishController(
     private val generatorClient: GeneratorClient
 ) {
     @PostMapping("/breakfast/{login}")
-    fun generateBreakfast(@PathVariable(name = "login") login: String): GenerateDishRequest =
-        dishService.generateRation(login)
+    fun generateBreakfast(@PathVariable(name = "login") login: String) {
+        val productToGenerator = dishService.generateRation(login)
+        //return generatorClient.generateBreakfast(productToGenerator).block()
+    }
 
 
     @PostMapping("/lunch/{login}")

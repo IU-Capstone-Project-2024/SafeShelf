@@ -1,5 +1,6 @@
 package com.techaas.configuration
 
+import jakarta.annotation.PostConstruct
 import jakarta.validation.constraints.NotNull
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.context.annotation.Bean
@@ -19,6 +20,11 @@ data class ClientConfig(
             .builder()
             .baseUrl(generatorDishes.baseUrl)
             .build()
+    }
+
+    @PostConstruct
+    fun check() {
+        println(generatorDishes.baseUrl)
     }
 
     data class GeneratorDishes(val baseUrl: String)
