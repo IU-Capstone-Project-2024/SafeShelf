@@ -84,10 +84,10 @@ class JpaUserProductService(
     }
 
     fun getUserProductByID(id: Long) : UserProductEntity {
-        return baseUserProductService.getUserProductEntityById(id)
+        return baseUserProductRepository.getUserProductEntityById(id)
     }
 
     fun deleteUserProductEntityByID(id: Long) {
-        baseUserProductService.deleteUserProductEntityById(id)
+        baseUserProductRepository.deleteUserProductEntityById(id)
     }
 }

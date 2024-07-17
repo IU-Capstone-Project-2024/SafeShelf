@@ -66,6 +66,8 @@ dependencies {
     testImplementation("org.testcontainers:postgresql")
     testImplementation("org.springframework.security:spring-security-test")
     testImplementation("org.testcontainers:postgresql:1.19.0")
+    implementation("org.mongodb:mongodb-driver-kotlin-coroutine:5.1.2")
+    implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
 }
 
 dependencyManagement {

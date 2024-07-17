@@ -1,33 +1,21 @@
 package com.techaas.domain.entity
 
-import jakarta.persistence.*
+import com.techaas.data_entities.DishType
+import com.techaas.dto.IngredientsEntity
+import jakarta.persistence.GeneratedValue
+import jakarta.persistence.GenerationType
+import org.springframework.data.annotation.Id
+import org.springframework.data.mongodb.core.mapping.Document
 
-@Entity
-@Table(name = "dishes")
+@Document(collection = "dishes")
 data class DishesEntity (
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    val id : Long = 0,
+    var id: String? = null,
 
-    @Column(name = "name")
-    var name : String,
-
-    @ManyToMany
-    @JoinTable(
-        name = "ingridients",
-        joinColumns = [JoinColumn(name = "dishes_id", referencedColumnName = "id")],
-        inverseJoinColumns = [JoinColumn(name = "user_product_id", referencedColumnName = "id")]
-    )
-    var ingridients : MutableList<UserProductEntity> = mutableListOf(),
-
-    @Column(name = "description")
-    var description : String,
-
-    @Column(name = "type")
-    var type : Char,
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
-    val user: UserEntity?
+    var name: String,
+    var ingredients: List<IngredientsEntity>,
+    var description: String,
+    var type: DishType,
+    var userId: Long
 )
