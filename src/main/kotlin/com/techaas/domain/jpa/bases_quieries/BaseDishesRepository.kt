@@ -1,14 +1,14 @@
 package com.techaas.domain.jpa.bases_quieries
 
 import com.techaas.domain.entity.DishesEntity
-import com.techaas.domain.entity.UserEntity
-import jakarta.persistence.Id
 import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.mongodb.repository.MongoRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface BaseDishesRepository : JpaRepository<DishesEntity, Long> {
-    fun getDishesEntitiesByUser(userEntity: UserEntity)
-    fun getDishesEntityById(id: Long)
-    fun deleteDishesEntityById(id: Long)
+interface BaseDishesRepository : MongoRepository<DishesEntity, Long> {
+    fun save(dishesEntity: DishesEntity): DishesEntity
+    fun findDishesEntityByUserId(userId: Long): List<DishesEntity>
+    fun deleteDishesEntityById(dishesEntityId: String)
+    fun findDishesEntityById(id: String): DishesEntity
 }

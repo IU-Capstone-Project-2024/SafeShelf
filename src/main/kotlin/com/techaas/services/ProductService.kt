@@ -66,7 +66,7 @@ class ProductService(
             )
             result.add(response)
         }
-        return result
+        return result.sortedBy { it.id }
     }
 
     @Transactional
@@ -77,12 +77,7 @@ class ProductService(
     @Transactional
     fun updateProductDate(updateProductDateRequest: UpdateProductDateRequest) {
         val user: UserEntity = jpaUserService.getUser(updateProductDateRequest.login)
-        val product: ProductEntity = jpaProductService.getProductEntityByID(updateProductDateRequest.productID)
-        if (jpaUserProductService.checkIfTheProductExistsForTheUser(user, product)) {
-            val userProductID: Long = jpaUserProductService.getProductByAccountAndProduct(user, product).id
-            jpaUserProductService.updateProductDate(userProductID, updateProductDateRequest.date)
-        } else {
-            // TODO : throw 404 (NOT FOUND) code
-        }
+        jpaUserProductService.updateProductDate(updateProductDateRequest.productID, updateProductDateRequest.date)
+
     }
 }
