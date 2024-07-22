@@ -87,6 +87,5 @@ def extract_and_convert(ingredient):
 df['ingredients_metric'] = df['ingredients'].apply(
     lambda ingredients_list: [extract_and_convert(ingredient) for ingredient in ingredients_list])
 
-
 with open("../dataset/ready_dataset.csv", "w") as f:
     f.write(df.to_csv(index=False))

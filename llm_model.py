@@ -13,10 +13,9 @@ class LLM:
 
     def generate_response(self, query, docs_rel):
         request = (
-            f'Write a recipe for a dish for one person, using only all these products with weights'
-            f': {query}. Use the information from the recipe book excerpt and adapt it for our products '
-            f': {docs_rel}. Write it in format: Recipe title: ...\nIngredients:\n - ingredient: weight\n ..., How to cook:\n ...')
-        print(request, end='\n\n\n\n\n\n')
+            f'Write an one recipe for a dish for one person, using only these products with weights'
+            f': {query}. Please use only the products that are written in the previous sentence. Use the information from the recipe book excerpt and adapt it for our products '
+            f': {docs_rel}. Write it in format: Recipe title: ...\nIngredients:\n - ingredient(Where name : weight\n ..., How to cook:\n ...')
         completion = self.client.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=[
