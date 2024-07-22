@@ -12,11 +12,12 @@ os.environ["TOKENIZERS_PARALLELISM"] = "false"
 @app.route('/breakfast', methods=['POST'])
 def generate_breakfast():
     data = request.json
-    print(data)
     query, recipe, translated_products = extract_data(data, 0)
-    # instruction = llm.generate_response(query, recipe)
-    # print(instruction)
-    dish = transform_recipe(translated_products)
+
+    instruction = llm.generate_response(query, recipe)
+    print(instruction)
+    dish = transform_recipe(translated_products,instruction)
+    print(dish)
     return jsonify(dish)
 
 

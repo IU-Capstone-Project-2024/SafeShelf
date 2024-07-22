@@ -11,7 +11,7 @@ services:
       - net
   ml:
     image: ghcr.io/ggerganov/llama.cpp:server
-    command: -m models/model-q8_0.gguf --host 0.0.0.0 --port 8080
+    command: -m models/model-q8_0.gguf -c 2048 --host 0.0.0.0 --port 8080
     ports:
       - "9090:8080"
     volumes:

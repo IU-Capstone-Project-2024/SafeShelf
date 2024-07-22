@@ -4,8 +4,8 @@ recipe = """Recipe title: Hearty Pea Bean Potato Soup for One
 
 Ingredients:
 - Tomatoes: 103g (1/2 lb)
-- Apples: 105g (1 medium)
-- Noodles: 40g (1 small)
+- Cheese: 105g (1 medium)
+- Cucumber: 40g (1 small)
 
 How to cook:
 
@@ -25,7 +25,7 @@ Note:
 - If you prefer a smoother soup, you can blend the soup using a blender or an immersion blender."""
 
 
-def transform_recipe(translated_product, recipe_main=recipe):
+def transform_recipe(translated_product, recipe_main):
     title_match = re.search(r"Recipe title:\s*(.*)", recipe_main)
     recipe_title = title_match.group(1) if title_match else ""
 
@@ -37,13 +37,17 @@ def transform_recipe(translated_product, recipe_main=recipe):
         if line:
             ingredient_match = re.match(r"- (.*):\s*(\d+)", line)
             if ingredient_match:
-                name = ingredient_match.group(1)
-                user_product_id = translated_product[name]
-                weight = ingredient_match.group(2)
-                ingredients.append({"id": user_product_id, "weight": int(weight)})
+                name = ingredient_match.group(1).lower().rstrip().lstrip()
+                print(name)
+                print(translated_product)
+                if name in translated_product:
+                    user_product_id = translated_product[name]
+                    weight = ingredient_match.group(2)
+                    ingredients.append({"id": user_product_id, "weight": int(weight)})
 
     description_match = re.search(r"How to cook:\s*(.*)", recipe_main, re.DOTALL)
     description = description_match.group(1).strip() if description_match else ""
+    description = description.replace('\n', '<br />')
     serialize_recipe = {
         'recipeTitle': recipe_title,
         'ingredients': ingredients,

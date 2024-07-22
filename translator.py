@@ -13,7 +13,8 @@ class Translator:
 
     def process_and_translate(self, data):
         for product in data['productToGenerators']:
-            translated = self.translate_product_name(product['name'])
+            translated = self.translate_product_name(product['name']).lower().rstrip().lstrip()
+            print(product['name'], translated, product['userProductId'], end='\n\n')
             self.translated_data[translated] = product['userProductId']
             product['name'] = translated
             if 'userProductId' in product:
