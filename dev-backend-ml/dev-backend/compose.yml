@@ -1,0 +1,46 @@
+version: "3.9"
+services:
+  database:
+    image: postgres:16
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: "safeshelf"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+    volumes:
+      - postgresql:/var/lib/postgresql/data
+    networks:
+      - backend
+
+  liquibase-migrations:
+    image: liquibase/liquibase:4.25
+    depends_on:
+      - database
+    command:
+      - --changeLogFile=master.xml
+      - --driver=org.postgresql.Driver
+      - --url=jdbc:postgresql://database:5432/safeshelf
+      - --username=postgres
+      - --password=postgres
+      - update
+    volumes:
+      - ./migrations:/liquibase/changelog
+    networks:
+      - backend
+
+  mongodb:
+    image: mongo:4.4.3
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - backend
+
+volumes:
+  postgresql:
+  mongodb_data:
+
+networks:
+  backend:

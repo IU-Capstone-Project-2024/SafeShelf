@@ -1,0 +1,10 @@
+.pageContainer {
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+}
+
+h1 {
+    color: #4D544B;
+    font-size: 30px;
+}

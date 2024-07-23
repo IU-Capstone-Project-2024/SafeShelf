@@ -1,0 +1,95 @@
+.pageContainer {
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+}
+
+h1 {
+    font-weight: 400;
+    color: #4D544B;
+    font-size: 30px;
+    margin-bottom: 40px;
+    margin-top: 45px;
+}
+
+
+.inputs {
+    display: flex;
+    flex-direction: column;
+    margin-top: 50px;
+}
+
+.inputs input {
+    width: 350px;
+    background-color: #D9D9D9;
+    color: #4D544B;
+    border-radius: 20px;
+    font-size: 20px;
+    padding-top: 10px;
+    padding-bottom: 11px;
+    padding-left: 19px;
+    margin-bottom: 30px;
+}
+
+.inputs select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: none;
+    width: 370px;
+    background-color: #D9D9D9;
+    color: #4D544B;
+    border-radius: 20px;
+    border: none;
+    font-size: 20px;
+    padding-top: 10px;
+    padding-bottom: 11px;
+    padding-left: 19px;
+    margin-bottom: 30px;
+}
+
+.inputs label {
+    margin-bottom: 5px;
+    color: #D2D4D2;
+    font-size: 15px;
+}
+
+.savebtn {
+    position: fixed;
+    font-family: "Roboto", sans-serif;
+    bottom: 20px;
+    left: 50%;
+    transform: translate(-50%);
+    border-radius: 20px;
+    background-color: #79CB64;
+    color: #4D544B;
+    font-size: 20px;
+    padding: 10px 47px 11px 47px;
+}
+
+.buttons {
+    /*bottom: 10px;*/
+    display: flex;
+    justify-content: center; /* Выравнивание кнопок внутри контейнера по центру */
+    width: 100vw; /* Чтобы контейнер занимал всю ширину экрана */
+}
+
+.fixed-buttons {
+    padding: 10px 48px 11px 48px;
+    color: #4D544B;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 20px;
+    margin: 0 35px; /* Отступы между кнопками */
+}
+
+.edit {
+    background-color: #FFF;
+    border: 1px solid #D51A1A;
+}
+
+.save {
+    background-color: #79CB64;
+}

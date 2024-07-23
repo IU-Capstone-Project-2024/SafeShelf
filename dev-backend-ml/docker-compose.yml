@@ -1,0 +1,31 @@
+version: '3.9'
+
+services:
+  chroma:
+    image: ghcr.io/chroma-core/chroma:latest
+    volumes:
+      - index_data:/chroma/.chroma/index
+    ports:
+      - "8000:8000"
+    networks:
+      - net
+  ml:
+    image: ghcr.io/ggerganov/llama.cpp:server
+    command: -m models/model-q8_0.gguf -c 2048 --host 0.0.0.0 --port 8080
+    ports:
+      - "9090:8080"
+    volumes:
+      - /Users/emildavlityarov/models:/models
+    deploy:
+      resources:
+        limits:
+          cpus: '10'
+          memory: 12G
+
+volumes:
+  index_data:
+    driver: local
+
+networks:
+  net:
+    driver: bridge

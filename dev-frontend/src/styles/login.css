@@ -1,0 +1,70 @@
+.wrapper {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-family: "Roboto", sans-serif;
+    align-items: center;
+}
+
+
+h1 {
+    font-weight: 400;
+    color: #4D544B;
+    font-size: 40px;
+    margin-bottom: 40px;
+    margin-top: 45px;
+}
+
+.inputs-log {
+    display: flex;
+    flex-direction: column;
+}
+
+.inputs-log input {
+    width: 350px;
+    background-color: #D9D9D9;
+    color: #4D544B;
+    border-radius: 20px;
+    border: none;
+    font-size: 20px;
+    padding-top: 10px;
+    padding-bottom: 11px;
+    padding-left: 19px;
+    margin-bottom: 30px;
+}
+
+.login-btn {
+    font-family: "Roboto", sans-serif;
+    border: none;
+    border-radius: 20px;
+    background-color: #79CB64;
+    color: white;
+    font-size: 20px;
+    padding: 10px 47px 11px 47px;
+}
+
+.text {
+    margin-top: 60px;
+    color: #4D544B;
+    font-size: 20px;
+}
+
+.sign-btn {
+    font-family: "Roboto", sans-serif;
+    border: none;
+    border-radius: 20px;
+    background-color: #91E0F9;
+    color: #4D544B;
+    font-size: 20px;
+    margin-top: 20px;
+    padding: 10px 120px 11px 130px;
+}
+
+.inputs-log label {
+    margin-bottom: 5px;
+    color: #D2D4D2;
+    font-size: 15px;
+}
+

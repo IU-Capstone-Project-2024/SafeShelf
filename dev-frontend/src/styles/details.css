@@ -1,0 +1,98 @@
+.details-page {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.heading {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+    font-family: "Roboto", sans-serif;
+    font-size: 25px;
+    color: #4D544B;
+}
+
+p {
+    font-family: "Roboto", sans-serif;
+    color: #4D544B;
+    font-size: 20px;
+}
+
+.list-decoration {
+    list-style-type: circle;
+    margin: 0;
+    padding: 0;
+    font-family: "Roboto", sans-serif;
+    color: #4D544B;
+    font-size: 20px;
+}
+
+.descript {
+    margin-top: 20px;
+    margin-left: 40px;
+    margin-right: 40px;
+    font-size: 20px;
+    width: 50%;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.cooked {
+    position: fixed;
+    font-family: "Roboto", sans-serif;
+    bottom: 20px;
+    left: 50%;
+    transform: translate(-50%);
+    border-radius: 20px;
+    background-color: #91E0F9;
+    color: #4D544B;
+    font-size: 20px;
+    padding: 10px 47px 11px 47px;
+}
+
+.buttons-del {
+    position: fixed;
+    bottom: 20px;
+    display: flex;
+    justify-content: center; /* Выравнивание кнопок внутри контейнера по центру */
+    width: 100vw; /* Чтобы контейнер занимал всю ширину экрана */
+}
+
+.fixed-button {
+    padding: 10px 48px 11px 48px;
+    color: #4D544B;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 20px;
+    margin: 0 35px; /* Отступы между кнопками */
+}
+
+.delete {
+    border: 1px solid #D51A1A;
+}
+
+.deletedish {
+    color: #FFFFFF;
+    background-color: #D51A1A;
+}
+
+.save {
+    background-color: #79CB64;
+}
+
+.date-picker {
+    width: 296px;
+    background-color: #D9D9D9;
+    color: #4D544B;
+    padding: 10px 48px 11px 48px;
+    font-size: 20px;
+    border: 0px;
+    border-radius: 25px;
+    font-family: "Roboto", sans-serif;
+    margin-top: 20px;
+}

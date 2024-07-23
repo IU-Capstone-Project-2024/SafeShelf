@@ -1,0 +1,44 @@
+.menu-visible {
+    background-color: #79CB64;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.h1 {
+    color: white;
+    font-size: 40px;
+}
+
+nav {
+    margin-top: 40px;
+    width: 30%;
+    border-top: 2px solid white;
+}
+
+.menuPage {
+    display: flex;
+    flex-direction: column;
+    background-color: #79CB64;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+}
+
+.menuPage div {
+    margin-top: 40px;
+    color: white;
+    font-size: 30px;
+}
+
+.menuPage a {
+    text-decoration: none;
+    color: inherit;
+    outline: none;
+}
+
+.menuPage a:focus,
+.menuPage a:active {
+    outline: none;
+}
