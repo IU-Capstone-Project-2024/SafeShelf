@@ -11,7 +11,6 @@ class MongoDBInit(private val mongoTemplate: MongoTemplate) {
     @Bean
     fun init(): CommandLineRunner {
         return CommandLineRunner {
-            // Create the dishes collection if it doesn't exist
             if (!mongoTemplate.collectionExists("dishes")) {
                 mongoTemplate.createCollection("dishes")
                 println("Created 'dishes' collection in MongoDB.")

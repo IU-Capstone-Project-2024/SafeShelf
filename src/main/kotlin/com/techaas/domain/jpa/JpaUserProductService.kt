@@ -9,6 +9,7 @@ import com.techaas.domain.jpa.bases_quieries.BaseUserRepository
 import com.techaas.dto.ProductWithDate
 import lombok.RequiredArgsConstructor
 import org.springframework.stereotype.Component
+import org.springframework.transaction.annotation.Transactional
 import java.math.BigDecimal
 import java.sql.Timestamp
 import java.time.LocalDate
@@ -21,6 +22,7 @@ class JpaUserProductService(
     private val baseProductRepository: BaseProductRepository
 ) {
 
+    @Transactional
     fun saveProduct(user: UserEntity, product: ProductWithDate) {
         val productToAdd: ProductEntity =
             baseProductRepository.getProductEntityByNameAndWeight(product.name, product.weight)
@@ -41,6 +43,7 @@ class JpaUserProductService(
         }
     }
 
+    @Transactional
     fun getProductsByUser(user: UserEntity): List<UserProductEntity> {
         return baseUserProductRepository.getUserProductEntitiesByUser(user)
     }
@@ -58,35 +61,41 @@ class JpaUserProductService(
         }
     }
 
+    @Transactional
     fun getUserProductEntityById(id: Long): UserProductEntity =
         baseUserProductRepository.getUserProductEntityById(id)
 
-
+    @Transactional
     fun deleteProduct(user: UserEntity, product: ProductEntity) {
         baseUserProductRepository.deleteUserProductEntityByUserAndProduct(user, product)
     }
 
+    @Transactional
     fun deleteUserProduct(id: Long) = baseUserProductRepository.deleteUserProductEntityById(id)
 
-
+    @Transactional
     fun updateProductDate(userProductID: Long, expirationDate: LocalDate) {
         val userProductEntity = baseUserProductRepository.findById(userProductID).orElse(null)
         userProductEntity.expirationDate = expirationDate
         baseUserProductRepository.save(userProductEntity)
     }
 
+    @Transactional
     fun findAll(): List<UserProductEntity> {
         return baseUserProductRepository.findAll()
     }
 
+    @Transactional
     fun checkIfTheProductExistsForTheUser(user: UserEntity, product: ProductEntity): Boolean {
         return baseUserProductRepository.existsByUserAndProduct(user, product)
     }
 
+    @Transactional
     fun getUserProductByID(id: Long) : UserProductEntity {
         return baseUserProductRepository.getUserProductEntityById(id)
     }
 
+    @Transactional
     fun deleteUserProductEntityByID(id: Long) {
         baseUserProductRepository.deleteUserProductEntityById(id)
     }

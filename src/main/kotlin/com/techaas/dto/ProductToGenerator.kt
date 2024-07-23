@@ -4,6 +4,7 @@ import java.math.BigDecimal
 import java.time.LocalDate
 
 data class ProductToGenerator(
+    val userProductId: Long,
     val name: String,
     val weight: BigDecimal,
     val kcal: BigDecimal,

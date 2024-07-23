@@ -15,8 +15,10 @@ class ConvertToGenerator {
             val product: ProductEntity = userProductEntity.product
             val overallWeight: BigDecimal = userProductEntity.weight
             val expirationDate: LocalDate = userProductEntity.expirationDate
+            val splittingName: List<String> = product.name.split(" ")
             ProductToGenerator(
-                name = product.name,
+                userProductId = userProductEntity.id,
+                name = splittingName[0],
                 weight = overallWeight,
                 kcal = product.kcal,
                 proteins = product.proteins,

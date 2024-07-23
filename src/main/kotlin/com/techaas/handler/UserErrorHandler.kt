@@ -15,7 +15,7 @@ class UserErrorHandler {
     fun handleIncorrectParameters(exception: IncorrectParameterException): ApiErrorResponse {
         return ApiErrorResponse(
             code = HttpStatus.BAD_REQUEST.toString(),
-            description = "Некорректно указаны параметры",
+            description = "Parameters specified incorrectly",
             exceptionName = exception.getName(),
             exceptionMessage = exception.message
         )
@@ -37,7 +37,7 @@ class UserErrorHandler {
     fun handleRepeatRegistration(exception: UserAlreadyExistsException): ApiErrorResponse {
         return ApiErrorResponse(
             code = HttpStatus.FORBIDDEN.toString(),
-            description = "Пользователь уже зарегистрирован",
+            description = "The password is incorrect",
             exceptionName = exception.getName(),
             exceptionMessage = exception.message
         )
@@ -48,7 +48,7 @@ class UserErrorHandler {
     fun handleUserDoesntExist(exception: UserDoesntExistException): ApiErrorResponse {
         return ApiErrorResponse(
             code = HttpStatus.BAD_REQUEST.toString(),
-            description = "Пользователь еще не зарегистрирован",
+            description = "The user is not registered yet",
             exceptionName = exception.getName(),
             exceptionMessage = exception.message
         )
@@ -59,7 +59,18 @@ class UserErrorHandler {
     fun handleRepeatUsingLogin(exception: RepeatLoginAfterUpdateException): ApiErrorResponse {
         return ApiErrorResponse(
             code = HttpStatus.CONFLICT.toString(),
-            description = "Пользователь с таким логином уже существует, пожалуйста, придумайте новый логин",
+            description = "A user with this login already exists, please create a new login",
+            exceptionName = exception.getName(),
+            exceptionMessage = exception.message
+        )
+    }
+
+    @ExceptionHandler(GenerateDishException::class)
+    @ResponseStatus(HttpStatus.BAD_GATEWAY)
+    fun handleFailGenerateDish(exception: GenerateDishException): ApiErrorResponse {
+        return ApiErrorResponse(
+            code = HttpStatus.BAD_GATEWAY.toString(),
+            description = "We were unable to generate a diet for you. We apologise(",
             exceptionName = exception.getName(),
             exceptionMessage = exception.message
         )
