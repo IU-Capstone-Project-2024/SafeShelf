@@ -1,4 +1,5 @@
 import re
+from difflib import SequenceMatcher
 
 recipe = """Recipe title: Hearty Pea Bean Potato Soup for One
 
@@ -33,6 +34,7 @@ def transform_recipe(translated_product, recipe_main):
     ingredients_text = ingredients_match.group(1) if ingredients_match else ""
     ingredients = []
     ingredient_lines = ingredients_text.split("\n")
+    print(ingredient_lines)
     for line in ingredient_lines:
         if line:
             ingredient_match = re.match(r"- (.*):\s*(\d+)", line)
@@ -40,8 +42,16 @@ def transform_recipe(translated_product, recipe_main):
                 name = ingredient_match.group(1).lower().rstrip().lstrip()
                 print(name)
                 print(translated_product)
-                if name in translated_product:
-                    user_product_id = translated_product[name]
+                checkExistence = False
+                finName = 0
+                for product in list(translated_product.keys()):
+                    print(name, product, SequenceMatcher(None, name, product).ratio())
+                    if SequenceMatcher(None, name, product).ratio() > 0.5:
+                        checkExistence = True
+                        finName = translated_product[product]
+                        break
+                if checkExistence:
+                    user_product_id = finName
                     weight = ingredient_match.group(2)
                     ingredients.append({"id": user_product_id, "weight": int(weight)})
 

@@ -13,10 +13,9 @@ os.environ["TOKENIZERS_PARALLELISM"] = "false"
 def generate_breakfast():
     data = request.json
     query, recipe, translated_products = extract_data(data, 0)
-
     instruction = llm.generate_response(query, recipe)
     print(instruction)
-    dish = transform_recipe(translated_products,instruction)
+    dish = transform_recipe(translated_products, instruction)
     print(dish)
     return jsonify(dish)
 
@@ -24,15 +23,23 @@ def generate_breakfast():
 @app.route('/lunch', methods=['POST'])
 def generate_lunch():
     data = request.json
-
-    return "", 200
+    query, recipe, translated_products = extract_data(data, 1)
+    instruction = llm.generate_response(query, recipe)
+    print(instruction)
+    dish = transform_recipe(translated_products, instruction)
+    print(dish)
+    return jsonify(dish)
 
 
 @app.route('/dinner', methods=['POST'])
 def generate_dinner():
     data = request.json
-
-    return "", 200
+    query, recipe, translated_products = extract_data(data, 2)
+    instruction = llm.generate_response(query, recipe)
+    print(instruction)
+    dish = transform_recipe(translated_products, instruction)
+    print(dish)
+    return jsonify(dish)
 
 
 if __name__ == '__main__':
