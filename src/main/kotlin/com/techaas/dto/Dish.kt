@@ -1,4 +1,7 @@
 package com.techaas.dto
 
-class Dish {
-}
+data class Dish(
+    val recipeTitle: String,
+    val ingredients: List<Product>,
+    val description: String
+)

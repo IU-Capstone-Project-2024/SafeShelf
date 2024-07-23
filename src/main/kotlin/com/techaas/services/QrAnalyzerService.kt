@@ -8,16 +8,16 @@ import com.techaas.dto.requests.DecodeReceiptRequest
 import io.github.cdimascio.dotenv.Dotenv
 import okhttp3.FormBody
 import okhttp3.OkHttpClient
-import org.json.JSONArray
 import okhttp3.Request
+import org.json.JSONArray
 import org.json.JSONObject
 import org.springframework.stereotype.Component
 import org.springframework.web.bind.annotation.RequestBody
 import java.io.File
 import java.io.IOException
 import java.math.BigDecimal
-import java.time.format.DateTimeFormatter
 import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 @Component
@@ -174,7 +174,7 @@ class QrAnalyzerService {
             val fats = jsonItem.optBigDecimal("fats")
             val carbohydrates = jsonItem.optBigDecimal("carbohydrates")
             val weight = jsonItem.optBigDecimal("weight")
-            var date: LocalDate = LocalDate.now()
+            var date: LocalDate = LocalDate.now().plusWeeks(2)
             if (jsonItem["date"] != "null") {
                 date = (jsonItem["date"] as? String)?.let { LocalDate.parse(it, DateTimeFormatter.ISO_DATE) }!!
             }
